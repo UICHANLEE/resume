@@ -25,6 +25,8 @@ const navItems = [
   { id: "ip", label: "Intellectual Property", icon: Medal },
   { id: "products", label: "Product Suite", icon: Stack },
   { id: "cases", label: "Case Studies", icon: TrendUp },
+  { id: "certificates", label: "Certificates", icon: Certificate },
+  { id: "awards", label: "Awards", icon: Medal },
   { id: "skills", label: "Skills", icon: Code },
 ];
 
@@ -118,16 +120,17 @@ const experienceStories = [
     role: "Machine Learning Engineer",
     company: "(주) 딥아이",
     title: "IRIS-Auto 결함 탐지 데이터 품질 개선",
-    summary:
-      "비파괴검사 이미지/초음파 데이터에서 라벨 품질을 안정화하고 YOLOv8-seg 학습 데이터셋을 구축했습니다.",
+    context:
+      "초음파 IRIS B-scan/C-scan 기반 결함 탐지 모델의 성능은 라벨 품질과 결함 기준의 일관성에 직접 영향을 받았습니다.",
     problem:
-      "열교환기 전열관 결함 데이터는 현장별 신호 품질과 라벨 기준이 달라 미탐/오탐 원인을 추적하기 어려웠습니다.",
-    action:
-      "ROBOFLOW, CVAT 기반으로 50,000건 이상의 YOLO 포맷 라벨을 구축하고, 결함 유형별 가이드와 검수/재라벨링 기준을 정리했습니다.",
-    solution:
-      "라벨링 기준을 모델 학습 단위와 맞추고, 결함 유형(IP, IC, EP, EC)과 데이터셋 버전을 관리해 반복 학습이 가능한 구조로 만들었습니다.",
+      "현장별 신호 품질이 다르고 IP, IC, EP, EC 결함 기준이 사람마다 흔들려 미탐/오탐 원인을 모델 문제인지 데이터 문제인지 분리하기 어려웠습니다.",
+    approach:
+      "먼저 결함 유형을 모델 학습 단위로 재정의하고, 라벨링-검수-재라벨링이 같은 기준을 보도록 품질 기준을 데이터셋 운영 규칙으로 만들었습니다.",
+    execution:
+      "ROBOFLOW, CVAT로 50,000건 이상의 YOLO 포맷 라벨을 구축했고, 640x640 학습 데이터셋, 결함 유형별 가이드, 검수 기준, 재라벨링 루프를 운영했습니다.",
     result:
-      "IRIS-Auto 탐지 정확도 98% 수준 달성에 기여했고, 라벨 오류율을 약 15% 줄여 모델 개선의 병목을 낮췄습니다.",
+      "IRIS-Auto 탐지 정확도 98% 수준 달성에 기여했고, 라벨 오류율을 약 15% 줄여 모델 개선의 병목을 데이터 품질 단계에서 낮췄습니다.",
+    impact: ["98% detection accuracy", "50K+ labels", "15% label error reduction"],
     tags: ["YOLOv8-seg", "CVAT", "ROBOFLOW", "Data QA"],
   },
   {
@@ -135,16 +138,17 @@ const experienceStories = [
     role: "FT-Transformer & API Contributor",
     company: "(주) 딥아이",
     title: "IRIS-Life 수명예측 모델 고도화",
-    summary:
-      "facility 편차가 큰 설비 데이터를 예측 가능한 수명평가 모델과 API 흐름으로 정리했습니다.",
+    context:
+      "열교환기 수명평가는 단순 회귀 문제가 아니라 설비별 운전 조건과 facility 분포 차이를 반영해야 하는 산업 예측 문제였습니다.",
     problem:
-      "초기 수명예측 모델은 facility별 분포 차이와 feature 정의 문제로 성능 편차가 컸고, R2가 음수로 떨어지는 케이스도 있었습니다.",
-    action:
-      "33,300개 샘플, 57개 feature, 37개 facility 기준으로 데이터를 재구성하고 facility hold-out 분할과 샘플링 로직을 적용했습니다.",
-    solution:
-      "FT-Transformer 학습을 최적화하고 LifeEvaluator, 시각화 모듈, FastAPI 엔드포인트로 모델 결과를 제품 흐름에 연결했습니다.",
+      "초기 모델은 facility별 분포 차이와 feature 정의 문제로 성능 편차가 컸고, 일부 실험에서는 R2가 음수로 떨어져 모델 신뢰성을 설명하기 어려웠습니다.",
+    approach:
+      "모델 구조보다 먼저 데이터 분할 기준을 의심했습니다. 같은 설비가 학습/검증에 섞이지 않도록 facility hold-out 기준을 세우고 feature를 재정의했습니다.",
+    execution:
+      "33,300개 샘플, 57개 feature, 37개 facility 기준으로 데이터를 재구성하고, 샘플링 로직과 FT-Transformer 학습 설정을 반복 실험했습니다.",
     result:
-      "R2 0.966, RMSE 2.57, MAE 1.99, MAPE 4.24% 성능을 달성했고 수명평가 REST API와 LLM 검사계획 기능까지 확장했습니다.",
+      "R2 0.966, RMSE 2.57, MAE 1.99, MAPE 4.24% 성능을 달성했고 수명평가 REST API와 LLM 검사계획 기능까지 제품 흐름으로 연결했습니다.",
+    impact: ["R2 0.966", "RMSE 2.57", "MAPE 4.24%", "FastAPI delivery"],
     tags: ["FT-Transformer", "FastAPI", "Sampling", "LifeEvaluator"],
   },
   {
@@ -152,16 +156,17 @@ const experienceStories = [
     role: "Reliability Documentation",
     company: "(주) 딥아이",
     title: "TTA AI 신뢰성 인증 대응",
-    summary:
-      "모델 성능뿐 아니라 신뢰성, 위험관리, 설명가능성 문서를 제품 품질 체계 안에 정리했습니다.",
+    context:
+      "산업용 AI는 정확도만 높아서는 도입되기 어렵고, 실패 원인과 위험 통제 근거를 문서로 설명할 수 있어야 했습니다.",
     problem:
-      "산업용 AI는 정확도 외에도 위험관리, 문서 완성도, 환경 영향, 현장 QA 근거를 인증 관점에서 설명해야 했습니다.",
-    action:
-      "ISO/IEC 23894 기반 위험관리계획서와 위험관리대장을 작성하고, TTA 중간심사 회의록과 시스템 설명 자료를 정리했습니다.",
-    solution:
-      "결함 검출 실패 원인, Random Forest 기반 XAI, 탄소/전력 모니터링 등 평가 항목별 근거를 인증 문서에 연결했습니다.",
+      "TTA 신뢰성 인증에서는 모델 성능, 위험관리, 설명가능성, 환경 영향, 현장 QA 근거를 각각 따로가 아니라 하나의 품질 체계로 설명해야 했습니다.",
+    approach:
+      "인증 항목을 먼저 분해한 뒤, 각 항목이 실제 시스템의 어떤 데이터, 모델, 운영 문서와 연결되는지 추적 가능한 구조로 정리했습니다.",
+    execution:
+      "ISO/IEC 23894 기반 위험관리계획서와 위험관리대장을 작성하고, 결함 미검출 원인, Random Forest 기반 XAI, 탄소/전력 모니터링 근거를 문서화했습니다.",
     result:
       "2025.08.05 TTA 신뢰성 중간심사를 통과했고, 문서 완성도와 위험도 커스터마이징 측면에서 긍정 평가를 받았습니다.",
+    impact: ["TTA mid-review passed", "ISO/IEC 23894", "XAI evidence", "Risk docs"],
     tags: ["TTA", "ISO/IEC 23894", "XAI", "Risk Management"],
   },
   {
@@ -169,16 +174,17 @@ const experienceStories = [
     role: "E-commerce Operator",
     company: "구매대행 온라인 쇼핑몰",
     title: "상품 카테고리 표준화와 운영 자동화",
-    summary:
-      "실제 커머스 운영 경험을 통해 데이터 분류, 속성 정리, 자동화의 필요성을 몸으로 익혔습니다.",
+    context:
+      "쇼핑몰 운영은 상품명, 속성, 카테고리의 작은 불일치가 노출 품질과 반복 업무량으로 바로 이어지는 데이터 운영 문제였습니다.",
     problem:
       "여러 판매 채널의 상품명, 속성, 카테고리 기준이 달라 중복 등록과 검색 정확도 저하가 반복됐습니다.",
-    action:
-      "토스쇼핑, 스마트스토어, 쿠팡윙, ESM+ 운영 데이터를 비교하며 중복/모호 카테고리를 계층 구조로 재정리했습니다.",
-    solution:
-      "상품명, 속성, 카테고리 기준을 표준화하고 자동 등록/수집 파이프라인 아이디어를 개인 프로젝트로 확장했습니다.",
+    approach:
+      "채널별 기준을 그대로 맞추기보다, 공통 상품 속성과 카테고리 계층을 먼저 정의해 중복과 모호성을 줄이는 방향으로 접근했습니다.",
+    execution:
+      "토스쇼핑, 스마트스토어, 쿠팡윙, ESM+ 운영 데이터를 비교하며 중복/모호 카테고리를 재분류하고, 자동 등록/수집 파이프라인 아이디어로 확장했습니다.",
     result:
       "중복 카테고리를 약 30% 줄이고 분류 일관성을 95% 이상으로 끌어올려 운영 효율과 검색 품질을 개선했습니다.",
+    impact: ["30% duplicate reduction", "95%+ consistency", "multi-channel ops"],
     tags: ["Commerce", "Taxonomy", "Automation", "Operations"],
   },
 ];
@@ -187,23 +193,47 @@ const caseStudies = [
   {
     title: "Data Integrity & Facility Split",
     problem: "동일 facility와 파일명이 서로 다른 폴더에 중복되어 학습/검증 데이터가 섞일 위험이 있었습니다.",
-    action: "facility + 파일명 6자리 기준 매핑 테이블을 만들고 공통 facility 103개만 필터링했습니다.",
+    action: "데이터 누수를 먼저 의심하고 facility + 파일명 6자리 기준 매핑 테이블을 만들어 공통 facility 103개만 필터링했습니다.",
     result: "데이터 누수를 줄이고 수명예측 모델 평가를 facility 단위 hold-out 기준으로 안정화했습니다.",
     metric: "103 facilities",
   },
   {
     title: "SVR Performance Optimization",
     problem: "자동평가 파이프라인에서 SVR 처리 시간이 길어 현장 QA 반복 속도가 떨어졌습니다.",
-    action: "n_jobs, epsilon, C 값을 조정하고 KernelRidge/FastPoly 대체 모델을 비교했습니다.",
+    action: "성능 병목을 모델 정확도와 처리 시간으로 나누고 n_jobs, epsilon, C 튜닝과 KernelRidge/FastPoly 대체 모델을 비교했습니다.",
     result: "기준 처리 시간을 35초에서 22초로 줄였고, 대체 모델에서는 25초에서 6초까지 단축 가능성을 확인했습니다.",
     metric: "35s -> 22s",
   },
   {
     title: "FT-Transformer Model Recovery",
     problem: "초기 모델은 facility 편차와 feature 품질 문제로 R2가 낮거나 음수로 흔들렸습니다.",
-    action: "feature 정의, 샘플링, 분할 기준, 하이퍼파라미터를 재점검하며 실험 로그를 축적했습니다.",
+    action: "모델만 교체하지 않고 feature 정의, 샘플링, 분할 기준, 하이퍼파라미터를 순서대로 분리해 실험 로그를 축적했습니다.",
     result: "R2 0.847에서 0.966까지 끌어올려 산업 데이터 예측 모델로 설명 가능한 성능을 만들었습니다.",
     metric: "R2 0.966",
+  },
+];
+
+const certificates = [
+  {
+    name: "ADsP",
+    fullName: "데이터분석 준전문가",
+    date: "2024.09.06",
+    note: "데이터 분석 기본기와 통계/모델링 기반 역량을 검증한 자격입니다.",
+  },
+  {
+    name: "SQLD",
+    fullName: "SQL 개발자",
+    date: "2025.04.05",
+    note: "데이터 모델링, SQL 작성, 관계형 데이터베이스 이해를 검증한 자격입니다.",
+  },
+];
+
+const awards = [
+  {
+    name: "2024 동남권 LINC3.0 글로벌 창업 노마드 캠프 우수상",
+    team: "Keepu",
+    date: "2024.08.28 - 2024.08.31",
+    note: "창업 아이디어를 팀 단위로 구체화하고 발표해 우수상으로 인정받았습니다.",
   },
 ];
 
@@ -373,10 +403,10 @@ export function App() {
         <section className="section-panel experience-section" id="experience">
           <div className="section-heading">
             <div>
-              <h2>Experience Stories</h2>
-              <p>각 경험을 Problem, Action, Solution, Result 흐름으로 정리했습니다.</p>
+              <h2>Problem Solving Stories</h2>
+              <p>각 경험을 문제, 접근, 실행, 결과로 분해해 판단 과정과 성과가 바로 보이도록 정리했습니다.</p>
             </div>
-            <span>PASR</span>
+            <span>Problem → Result</span>
           </div>
 
           <div className="story-list">
@@ -393,14 +423,24 @@ export function App() {
                       {entry.role} · {entry.company}
                     </p>
                   </div>
-                  <strong>{entry.summary}</strong>
+                  <strong>{entry.context}</strong>
+                </div>
+
+                <div className="problem-strip">
+                  <span>Core Problem</span>
+                  <p>{entry.problem}</p>
                 </div>
 
                 <div className="pasr-grid">
-                  <StoryStep label="Problem" text={entry.problem} />
-                  <StoryStep label="Action" text={entry.action} />
-                  <StoryStep label="Solution" text={entry.solution} />
-                  <StoryStep label="Result" text={entry.result} highlight />
+                  <StoryStep label="Approach" title="어떻게 접근했나" text={entry.approach} />
+                  <StoryStep label="Execution" title="무엇을 실행했나" text={entry.execution} />
+                  <StoryStep label="Result" title="어떤 결과를 냈나" text={entry.result} highlight />
+                </div>
+
+                <div className="impact-row" aria-label={`${entry.title} outcomes`}>
+                  {entry.impact.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
                 </div>
 
                 <div className="tag-row">
@@ -488,10 +528,54 @@ export function App() {
                   <strong>{study.metric}</strong>
                 </header>
                 <div className="case-steps">
-                  <StoryStep label="Problem" text={study.problem} />
-                  <StoryStep label="Action" text={study.action} />
-                  <StoryStep label="Result" text={study.result} highlight />
+                  <StoryStep label="Problem" title="무엇이 문제였나" text={study.problem} />
+                  <StoryStep label="Approach" title="어떻게 접근했나" text={study.action} />
+                  <StoryStep label="Result" title="결과는 무엇인가" text={study.result} highlight />
                 </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section-panel credentials-section" id="certificates">
+          <div className="section-heading">
+            <div>
+              <h2>Certificates</h2>
+              <p>데이터 분석과 SQL 역량을 검증한 자격증입니다.</p>
+            </div>
+            <span>verified</span>
+          </div>
+
+          <div className="credential-grid">
+            {certificates.map((certificate) => (
+              <article className="credential-card" key={certificate.name}>
+                <span>{certificate.date}</span>
+                <h3>{certificate.name}</h3>
+                <strong>{certificate.fullName}</strong>
+                <p>{certificate.note}</p>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section-panel credentials-section" id="awards">
+          <div className="section-heading">
+            <div>
+              <h2>Awards</h2>
+              <p>팀 프로젝트와 창업 아이디어 실행력을 인정받은 수상 이력입니다.</p>
+            </div>
+            <span>achievement</span>
+          </div>
+
+          <div className="award-list">
+            {awards.map((award) => (
+              <article className="award-card" key={award.name}>
+                <div>
+                  <span>{award.date}</span>
+                  <h3>{award.name}</h3>
+                  <strong>Team {award.team}</strong>
+                </div>
+                <p>{award.note}</p>
               </article>
             ))}
           </div>
@@ -542,10 +626,11 @@ export function App() {
   );
 }
 
-function StoryStep({ label, text, highlight = false }) {
+function StoryStep({ label, title, text, highlight = false }) {
   return (
     <div className={highlight ? "story-step highlight" : "story-step"}>
       <span>{label}</span>
+      {title ? <strong>{title}</strong> : null}
       <p>{text}</p>
     </div>
   );
