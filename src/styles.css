@@ -636,6 +636,79 @@ input {
   padding-top: 14px;
 }
 
+.lifespan-section {
+  margin-top: 126px;
+}
+
+.lifespan-map {
+  display: grid;
+  gap: 22px;
+}
+
+.lifespan-card {
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background:
+    linear-gradient(180deg, rgba(72, 213, 255, 0.04), transparent 45%),
+    var(--panel-2);
+  padding: 26px;
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.18);
+}
+
+.lifespan-head {
+  display: grid;
+  grid-template-columns: 72px 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.lifespan-head > span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  border: 1px solid rgba(72, 213, 255, 0.35);
+  background:
+    linear-gradient(135deg, rgba(72, 213, 255, 0.14), rgba(117, 92, 255, 0.12)),
+    rgba(6, 13, 27, 0.42);
+  color: var(--cyan);
+  font-family: "SFMono-Regular", Consolas, monospace;
+  font-size: 13px;
+  font-weight: 950;
+}
+
+.lifespan-head h3 {
+  margin: 0;
+  color: #f5f8ff;
+  font-size: 23px;
+  font-weight: 950;
+  line-height: 1.28;
+}
+
+.lifespan-head p {
+  margin: 12px 0 0;
+  color: #cbd6e8;
+  font-size: 12px;
+  font-weight: 780;
+  line-height: 1.72;
+}
+
+.lifespan-problem {
+  grid-template-columns: 104px 1fr;
+  margin-top: 22px;
+}
+
+.lifespan-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.lifespan-grid .story-step {
+  min-height: 214px;
+}
+
 .timeline {
   display: grid;
   gap: 22px;
@@ -1326,13 +1399,15 @@ input {
   }
 
   .focus-grid,
-  .pasr-grid {
+  .pasr-grid,
+  .lifespan-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .problem-strip,
   .award-card,
   .standard-head,
+  .lifespan-head,
   .standard-body {
     grid-template-columns: 1fr;
   }
@@ -1445,6 +1520,7 @@ input {
   #products,
   .standards-section,
   .credentials-section,
+  .lifespan-section,
   #skills {
     margin-top: 82px;
   }
@@ -1456,6 +1532,7 @@ input {
   .profile-card,
   .focus-card,
   .story-card,
+  .lifespan-card,
   .standard-card {
     padding: 18px;
   }
@@ -1470,6 +1547,10 @@ input {
 
   .story-step {
     min-height: auto;
+  }
+
+  .lifespan-grid {
+    grid-template-columns: 1fr;
   }
 
   .credential-grid {

@@ -22,6 +22,7 @@ import {
 const navItems = [
   { id: "about", label: "About", icon: IdentificationBadge },
   { id: "experience", label: "Experience", icon: Briefcase },
+  { id: "lifespan", label: "Lifespan Deep Dive", icon: TrendUp },
   { id: "ip", label: "Intellectual Property", icon: Medal },
   { id: "products", label: "Product Suite", icon: Stack },
   { id: "cases", label: "Case Studies", icon: TrendUp },
@@ -138,19 +139,19 @@ const experienceStories = [
     period: "2025.04 - 2025.10",
     role: "FT-Transformer & API Contributor",
     company: "(주) 딥아이",
-    title: "IRIS-Life 수명예측 모델 고도화",
+    title: "IRIS-Life 수명평가 체계 고도화",
     context:
-      "열교환기 수명평가는 단순 회귀 문제가 아니라 설비별 운전 조건과 facility 분포 차이를 반영해야 하는 산업 예측 문제였습니다.",
+      "열교환기 수명평가는 단순 회귀 문제가 아니라 기존 공식 기반 평가, 고객사 기준, 극치해석, AI 예측 모델을 함께 설명해야 하는 산업 예측 문제였습니다.",
     problem:
-      "초기 모델은 facility별 분포 차이와 feature 정의 문제로 성능 편차가 컸고, 일부 실험에서는 R2가 음수로 떨어져 모델 신뢰성을 설명하기 어려웠습니다.",
+      "기존 수명평가 방식은 기준과 계산 흐름이 흩어져 있었고, 초기 AI 모델은 facility별 분포 차이와 feature 정의 문제로 R2가 음수로 떨어지는 실험도 있어 신뢰성을 설명하기 어려웠습니다.",
     approach:
-      "모델 구조보다 먼저 데이터 분할 기준을 의심했습니다. 같은 설비가 학습/검증에 섞이지 않도록 facility hold-out 기준을 세우고 feature를 재정의했습니다.",
+      "모델 구조만 바꾸기보다 기존 수명평가, SK/GS/DEEPAI 3방식, EVA 극치해석, AI 예측 모델을 분리해 각 방식의 역할과 한계를 먼저 정리했습니다.",
     execution:
-      "33,300개 샘플, 57개 feature, 37개 facility 기준으로 데이터를 재구성하고, 샘플링 로직과 FT-Transformer 학습 설정을 반복 실험했습니다.",
+      "LifeEvaluator 클래스로 3가지 평가 방식을 구조화하고, 33,300개 샘플, 57개 feature, 37개 facility 기준의 FT-Transformer 학습과 FastAPI 수명평가 엔드포인트까지 연결했습니다.",
     result:
       "R2 0.966, RMSE 2.57, MAE 1.99, MAPE 4.24% 성능을 달성했고 수명평가 REST API와 LLM 검사계획 기능까지 제품 흐름으로 연결했습니다.",
-    impact: ["R2 0.966", "RMSE 2.57", "MAPE 4.24%", "FastAPI delivery"],
-    tags: ["FT-Transformer", "FastAPI", "Sampling", "LifeEvaluator"],
+    impact: ["3-method LifeEvaluator", "R2 0.966", "RMSE 2.57", "FastAPI delivery"],
+    tags: ["LifeEvaluator", "FT-Transformer", "EVA", "FastAPI", "LLM Plan"],
   },
   {
     period: "2025.07 - 2025.09",
@@ -211,6 +212,84 @@ const caseStudies = [
     action: "모델만 교체하지 않고 feature 정의, 샘플링, 분할 기준, 하이퍼파라미터를 순서대로 분리해 실험 로그를 축적했습니다.",
     result: "R2 0.847에서 0.966까지 끌어올려 산업 데이터 예측 모델로 설명 가능한 성능을 만들었습니다.",
     metric: "R2 0.966",
+  },
+];
+
+const lifespanDeepDive = [
+  {
+    label: "00",
+    title: "기존 수명평가 방식의 한계 정리",
+    problem:
+      "기존 방식은 잔여수명 공식과 고객사별 판단 기준이 산출물 곳곳에 흩어져 있어, 같은 데이터라도 어떤 기준으로 평가했는지 재현하고 설명하기 어려웠습니다.",
+    approach:
+      "먼저 기존 수명평가가 어떤 입력값을 쓰고 어떤 공식으로 결과를 내는지 분해했습니다. 검사두께, 교체두께, 부식율, MRT 같은 핵심 변수를 분리하고 기준별 차이를 비교 가능한 형태로 정리했습니다.",
+    execution:
+      "잔여수명 공식 `(검사두께 - 교체두께) / 부식율`, MRT 계산, 결함 깊이/두께 기반 판단 흐름을 코드와 문서 기준으로 재정리하고 이후 1/2/3 방식의 baseline 역할로 연결했습니다.",
+    result:
+      "기존 수명평가를 단순 과거 방식이 아니라 비교 가능한 기준선으로 만들었고, AI 모델 결과가 기존 기준과 어떻게 다른지 설명할 수 있는 자소서용 문제 해결 재료가 생겼습니다.",
+    essayPoint:
+      "저는 먼저 기존 수명평가가 왜 설명과 재현이 어려운지 확인하고, 공식을 기준선으로 재정리해 이후 AI 모델의 개선 효과를 비교할 수 있는 출발점을 만들었습니다.",
+    evidence: ["잔여수명 공식", "MRT", "기존 방식 baseline"],
+  },
+  {
+    label: "01",
+    title: "수명평가 1: SK 방식",
+    problem:
+      "고객사 기준이 반영된 방식은 현장 의사결정에는 익숙하지만, 모델/서비스 안에서는 기준이 명시적으로 분리되지 않으면 결과 해석이 모호해질 수 있었습니다.",
+    approach:
+      "SK 방식은 AI 예측 결과와 섞지 않고 독립된 평가 branch로 두어, 고객사 기준 기반 결과와 AI 기반 결과를 같은 입력에서 비교할 수 있게 접근했습니다.",
+    execution:
+      "LifeEvaluator 안에서 방식별 입력, 계산, 출력 구조를 분리하고, 결과 리포트와 시각화에서 어떤 방식으로 계산된 값인지 드러나도록 수명평가 흐름을 모듈화했습니다.",
+    result:
+      "고객사 기준을 유지하면서도 코드상 재현성과 비교 가능성을 확보했고, 현장 기준과 AI 모델 기준을 함께 설명할 수 있는 평가 체계를 만들었습니다.",
+    essayPoint:
+      "SK 방식에서는 현장 기준을 그대로 존중하되, 서비스 안에서 독립된 평가 흐름으로 분리해 고객사 기준과 AI 결과를 혼동하지 않도록 만들었습니다.",
+    evidence: ["LifeEvaluator", "고객사 기준", "비교 가능성"],
+  },
+  {
+    label: "02",
+    title: "수명평가 2: GS 방식과 극치해석",
+    problem:
+      "단순 평균이나 단일 회귀선만으로는 열교환기 전열관의 위험 구간을 설명하기 어렵고, 극단 결함이나 심각도 높은 구간을 보수적으로 해석할 필요가 있었습니다.",
+    approach:
+      "GS 방식은 Gumbel/Weibull 기반 EVA(극치해석)와 연결해, 설비 전체의 평균적 예측이 아니라 위험도가 큰 결함 구간을 평가하는 기준으로 정리했습니다.",
+    execution:
+      "Gumbel·Weibull 극치해석, 결함 깊이 분포, MRT 계산 흐름을 수명평가 로직과 연결하고, 전열관/모듈 단위 시각화에서 위험 구간을 설명할 수 있도록 구성했습니다.",
+    result:
+      "수명평가가 단순 점수 산출이 아니라 위험 구간 탐지와 유지보수 우선순위 판단으로 이어지게 되었고, 특허의 위험구간 탐지 서사와도 연결되는 근거가 생겼습니다.",
+    essayPoint:
+      "GS 방식에서는 평균값 중심 평가의 한계를 보완하기 위해 극치해석 관점을 연결했고, 위험 구간을 설명 가능한 유지보수 판단 근거로 바꾸는 데 집중했습니다.",
+    evidence: ["Gumbel/Weibull", "EVA", "위험구간"],
+  },
+  {
+    label: "03",
+    title: "수명평가 3: DEEPAI AI 예측 방식",
+    problem:
+      "기존 공식 기반 방식만으로는 운영환경 변수와 facility별 편차를 충분히 반영하기 어려웠고, 초기 AI 모델은 데이터 분할과 feature 정의 문제로 성능이 불안정했습니다.",
+    approach:
+      "facility 단위 hold-out으로 데이터 누수를 줄이고, 운영환경 변수를 포함한 57개 feature와 33,300개 샘플을 기준으로 AI 예측 방식을 기존 방식과 분리해 검증했습니다.",
+    execution:
+      "FT-Transformer를 학습·최적화하고 샘플링 로직을 보강했으며, 37개 facility와 273 epoch early stopping 기준으로 모델 성능을 검증했습니다.",
+    result:
+      "R2 0.966, RMSE 2.57, MAE 1.99, MAPE 4.24%를 달성해 기존 방식의 한계를 보완하는 AI 기반 수명평가 방식으로 제시할 수 있게 되었습니다.",
+    essayPoint:
+      "DEEPAI 방식에서는 모델 구조보다 먼저 데이터 분할과 feature 정의 문제를 의심했고, facility 단위 검증과 FT-Transformer 최적화를 통해 신뢰 가능한 성능으로 회복시켰습니다.",
+    evidence: ["FT-Transformer", "R2 0.966", "57 features", "33,300 samples"],
+  },
+  {
+    label: "04",
+    title: "제품화: API, 시각화, LLM 검사계획",
+    problem:
+      "수명평가 모델이 좋아도 현장에서 쓰려면 파일 업로드, 결과 조회, 리포트, 검사계획 추천까지 연결되어야 했습니다.",
+    approach:
+      "모델 결과를 노트북이나 단발성 스크립트에 두지 않고 FastAPI 엔드포인트, 시각화 모듈, LLM 검사계획으로 나누어 제품 흐름으로 설계했습니다.",
+    execution:
+      "`POST /iris-lifetime`, upload/result/file/llm 엔드포인트를 설계하고, vis_main, vis_life, vis_exchanger_module, vis_tube_module 시각화와 Phase1 30% + Phase2 70% 기반 검사계획 로직을 연결했습니다.",
+    result:
+      "DEEP-NDT 수명평가 시스템 저작권 등록과 API 프로토타입으로 이어졌고, 모델 성능·설명·현장 사용성을 한 흐름으로 보여줄 수 있는 대표 프로젝트가 되었습니다.",
+    essayPoint:
+      "마지막으로 수명평가 결과를 API, 시각화, LLM 검사계획으로 연결해 모델이 실험 결과에 머무르지 않고 현장 사용 흐름으로 이어지게 만들었습니다.",
+    evidence: ["FastAPI", "LLM Inspection Plan", "4 visualization modules", "저작권 등록"],
   },
 ];
 
@@ -480,6 +559,47 @@ export function App() {
                 <div className="tag-row">
                   {entry.tags.map((tag) => (
                     <span key={tag}>{tag}</span>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section-panel lifespan-section" id="lifespan">
+          <div className="section-heading">
+            <div>
+              <h2>IRIS-Life Deep Dive</h2>
+              <p>기존 수명평가와 수명평가 1/2/3을 각각 문제, 접근, 실행, 결과 중심의 자소서 재료로 분리했습니다.</p>
+            </div>
+            <span>baseline → method 1/2/3 → product</span>
+          </div>
+
+          <div className="lifespan-map">
+            {lifespanDeepDive.map((item) => (
+              <article className="lifespan-card" key={item.title}>
+                <div className="lifespan-head">
+                  <span>{item.label}</span>
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p>{item.essayPoint}</p>
+                  </div>
+                </div>
+
+                <div className="problem-strip lifespan-problem">
+                  <span>Problem</span>
+                  <p>{item.problem}</p>
+                </div>
+
+                <div className="lifespan-grid">
+                  <StoryStep label="Approach" title="어떻게 접근했나" text={item.approach} />
+                  <StoryStep label="Execution" title="무엇을 실행했나" text={item.execution} />
+                  <StoryStep label="Result" title="어떤 결과를 냈나" text={item.result} highlight />
+                </div>
+
+                <div className="impact-row compact" aria-label={`${item.title} evidence`}>
+                  {item.evidence.map((evidence) => (
+                    <span key={evidence}>{evidence}</span>
                   ))}
                 </div>
               </article>
