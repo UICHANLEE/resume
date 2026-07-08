@@ -25,6 +25,7 @@ const navItems = [
   { id: "ip", label: "Intellectual Property", icon: Medal },
   { id: "products", label: "Product Suite", icon: Stack },
   { id: "cases", label: "Case Studies", icon: TrendUp },
+  { id: "standards", label: "Standards", icon: ShieldCheck },
   { id: "certificates", label: "Certificates", icon: Certificate },
   { id: "awards", label: "Awards", icon: Medal },
   { id: "skills", label: "Skills", icon: Code },
@@ -153,21 +154,21 @@ const experienceStories = [
   },
   {
     period: "2025.07 - 2025.09",
-    role: "Reliability Documentation",
+    role: "Quality & Reliability Documentation",
     company: "(주) 딥아이",
-    title: "TTA AI 신뢰성 인증 대응",
+    title: "TTA 신뢰성·ISO 29110 품질체계 대응",
     context:
-      "산업용 AI는 정확도만 높아서는 도입되기 어렵고, 실패 원인과 위험 통제 근거를 문서로 설명할 수 있어야 했습니다.",
+      "산업용 AI는 정확도만 높아서는 도입되기 어렵고, 소프트웨어 품질체계와 AI 위험관리 근거를 문서로 설명할 수 있어야 했습니다.",
     problem:
-      "TTA 신뢰성 인증에서는 모델 성능, 위험관리, 설명가능성, 환경 영향, 현장 QA 근거를 각각 따로가 아니라 하나의 품질 체계로 설명해야 했습니다.",
+      "TTA 신뢰성 인증과 ISO 29110 기반 품질체계 대응에서는 모델 성능, 위험관리, 개발 산출물, 현장 QA 근거를 하나의 추적 가능한 체계로 묶어야 했습니다.",
     approach:
-      "인증 항목을 먼저 분해한 뒤, 각 항목이 실제 시스템의 어떤 데이터, 모델, 운영 문서와 연결되는지 추적 가능한 구조로 정리했습니다.",
+      "인증/진단 항목을 먼저 분해한 뒤, 각 요구사항이 실제 시스템의 데이터, 모델, 개발 문서, 위험관리 문서 중 어디에 대응되는지 매핑했습니다.",
     execution:
-      "ISO/IEC 23894 기반 위험관리계획서와 위험관리대장을 작성하고, 결함 미검출 원인, Random Forest 기반 XAI, 탄소/전력 모니터링 근거를 문서화했습니다.",
+      "ISO/IEC 23894 기반 위험관리계획서·위험관리대장을 작성하고, ISO 29110 소프트웨어 품질체계와 KTL 마크 인증 대응 맥락에서 시스템 설명서와 산출물 정합성을 정리했습니다.",
     result:
-      "2025.08.05 TTA 신뢰성 중간심사를 통과했고, 문서 완성도와 위험도 커스터마이징 측면에서 긍정 평가를 받았습니다.",
-    impact: ["TTA mid-review passed", "ISO/IEC 23894", "XAI evidence", "Risk docs"],
-    tags: ["TTA", "ISO/IEC 23894", "XAI", "Risk Management"],
+      "2025.08.05 TTA 신뢰성 중간심사를 통과했고, UIPA 품질체계진단·ISO 29110 대응 과정에서 문서 완성도와 위험도 커스터마이징 측면의 근거를 강화했습니다.",
+    impact: ["TTA mid-review passed", "ISO 29110", "ISO/IEC 23894", "KTL 대응"],
+    tags: ["TTA", "ISO 29110", "ISO/IEC 23894", "KTL", "Risk Management"],
   },
   {
     period: "2022.05 - Present",
@@ -234,6 +235,36 @@ const awards = [
     team: "Keepu",
     date: "2024.08.28 - 2024.08.31",
     note: "창업 아이디어를 팀 단위로 구체화하고 발표해 우수상으로 인정받았습니다.",
+  },
+];
+
+const standards = [
+  {
+    name: "ISO 29110",
+    title: "소프트웨어 품질체계 / KTL 마크 인증 대응",
+    context:
+      "소규모 조직·프로젝트의 소프트웨어 개발 프로세스와 산출물 체계를 점검하는 표준으로, UIPA 품질체계진단과 KTL 마크 인증 대응 맥락에서 학습·문서화했습니다.",
+    contribution:
+      "시스템 설명서, 개발 산출물, 품질관리 관점의 문서 정합성을 확인하고 AI 제품이 모델 결과뿐 아니라 개발 프로세스 기준으로도 설명될 수 있도록 정리했습니다.",
+    evidence: ["UIPA 품질체계진단", "KTL 마크 인증 대응", "소프트웨어 품질체계"],
+  },
+  {
+    name: "ISO/IEC 23894",
+    title: "AI 위험관리",
+    context:
+      "AI 시스템의 위험 식별, 평가, 통제, 모니터링 관점에서 TTA 신뢰성 인증 대응 문서를 구성할 때 기준으로 활용했습니다.",
+    contribution:
+      "위험관리계획서와 위험관리대장을 작성하고 결함 미검출 원인, XAI 근거, 환경 영향 모니터링 항목을 인증 요구사항과 연결했습니다.",
+    evidence: ["위험관리계획서", "위험관리대장", "TTA 신뢰성"],
+  },
+  {
+    name: "ISO 9712 / NDT",
+    title: "비파괴검사 도메인 이해",
+    context:
+      "IRIS 검사 데이터와 열교환기 전열관 결함 도메인을 이해하기 위해 NDT 표준과 결함 판정 맥락을 함께 학습했습니다.",
+    contribution:
+      "결함 유형, 검사 데이터 흐름, 현장 QA 이슈를 모델링과 문서화 과정에 반영해 단순 이미지 모델이 아닌 도메인 기반 AI 시스템으로 설명했습니다.",
+    evidence: ["IRIS", "NDT", "현장 QA"],
   },
 ];
 
@@ -537,6 +568,42 @@ export function App() {
           </div>
         </section>
 
+        <section className="section-panel standards-section" id="standards">
+          <div className="section-heading">
+            <div>
+              <h2>Standards & Quality System</h2>
+              <p>업무 중 학습하고 문서화에 반영한 품질·신뢰성 표준 대응 경험입니다.</p>
+            </div>
+            <span>quality</span>
+          </div>
+
+          <div className="standards-grid">
+            {standards.map((standard) => (
+              <article className="standard-card" key={standard.name}>
+                <div className="standard-head">
+                  <span>{standard.name}</span>
+                  <h3>{standard.title}</h3>
+                </div>
+                <div className="standard-body">
+                  <div>
+                    <strong>Context</strong>
+                    <p>{standard.context}</p>
+                  </div>
+                  <div>
+                    <strong>Contribution</strong>
+                    <p>{standard.contribution}</p>
+                  </div>
+                </div>
+                <div className="impact-row compact">
+                  {standard.evidence.map((item) => (
+                    <span key={item}>{item}</span>
+                  ))}
+                </div>
+              </article>
+            ))}
+          </div>
+        </section>
+
         <section className="section-panel credentials-section" id="certificates">
           <div className="section-heading">
             <div>
@@ -611,7 +678,7 @@ export function App() {
             <GraduationCap size={17} weight="bold" />
             <div>
               <strong>국립부경대학교 시스템경영공학부 기술데이터공학전공</strong>
-              <span>ADsP · SQLD · LINC3.0 글로벌 창업 노마드 캠프 우수상</span>
+              <span>데이터사이언스 · 딥러닝과 인공지능 · ISO 29110/23894 업무 연계 학습</span>
             </div>
             <Certificate size={17} weight="bold" />
           </div>
