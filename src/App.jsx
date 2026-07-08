@@ -162,13 +162,13 @@ const experienceStories = [
     problem:
       "TTA 신뢰성 인증과 ISO 29110 기반 품질체계 대응에서는 모델 성능, 위험관리, 개발 산출물, 현장 QA 근거를 하나의 추적 가능한 체계로 묶어야 했습니다.",
     approach:
-      "인증/진단 항목을 먼저 분해한 뒤, 각 요구사항이 실제 시스템의 데이터, 모델, 개발 문서, 위험관리 문서 중 어디에 대응되는지 매핑했습니다.",
+      "TTA, KTL, UIPA 사업 맥락에서 요구되는 인증/진단 항목을 먼저 분해한 뒤, 각 요구사항이 실제 시스템의 데이터, 모델, 개발 문서, 위험관리 문서 중 어디에 대응되는지 매핑했습니다.",
     execution:
-      "ISO/IEC 23894 기반 위험관리계획서·위험관리대장을 작성하고, ISO 29110 소프트웨어 품질체계와 KTL 마크 인증 대응 맥락에서 시스템 설명서와 산출물 정합성을 정리했습니다.",
+      "울산정보산업진흥원(UIPA) 사업 과제 맥락에서 ISO/IEC 23894 기반 위험관리계획서·위험관리대장을 작성하고, ISO 29110 소프트웨어 품질체계와 KTL 마크 인증 대응을 위한 시스템 설명서와 산출물 정합성을 정리했습니다.",
     result:
-      "2025.08.05 TTA 신뢰성 중간심사를 통과했고, UIPA 품질체계진단·ISO 29110 대응 과정에서 문서 완성도와 위험도 커스터마이징 측면의 근거를 강화했습니다.",
-    impact: ["TTA mid-review passed", "ISO 29110", "ISO/IEC 23894", "KTL 대응"],
-    tags: ["TTA", "ISO 29110", "ISO/IEC 23894", "KTL", "Risk Management"],
+      "2025.08.05 TTA 신뢰성 중간심사를 통과했고, UIPA 품질체계진단·KTL/ISO 29110 대응 과정에서 문서 완성도와 위험도 커스터마이징 측면의 근거를 강화했습니다.",
+    impact: ["TTA mid-review passed", "UIPA 사업", "ISO 29110", "KTL 대응"],
+    tags: ["TTA", "UIPA", "ISO 29110", "ISO/IEC 23894", "KTL"],
   },
   {
     period: "2022.05 - Present",
@@ -242,24 +242,27 @@ const standards = [
   {
     name: "ISO 29110",
     title: "소프트웨어 품질체계 / KTL 마크 인증 대응",
+    organization: "울산정보산업진흥원(UIPA) 사업 · KTL 품질체계/마크 인증 대응",
     context:
-      "소규모 조직·프로젝트의 소프트웨어 개발 프로세스와 산출물 체계를 점검하는 표준으로, UIPA 품질체계진단과 KTL 마크 인증 대응 맥락에서 학습·문서화했습니다.",
+      "울산정보산업진흥원(UIPA) 사업 과제와 KTL 마크 인증 대응 맥락에서, 소규모 조직·프로젝트의 소프트웨어 개발 프로세스와 산출물 체계를 점검하는 표준으로 학습·문서화했습니다.",
     contribution:
       "시스템 설명서, 개발 산출물, 품질관리 관점의 문서 정합성을 확인하고 AI 제품이 모델 결과뿐 아니라 개발 프로세스 기준으로도 설명될 수 있도록 정리했습니다.",
-    evidence: ["UIPA 품질체계진단", "KTL 마크 인증 대응", "소프트웨어 품질체계"],
+    evidence: ["UIPA 사업", "UIPA 품질체계진단", "KTL 마크 인증 대응", "ISO 29110"],
   },
   {
     name: "ISO/IEC 23894",
     title: "AI 위험관리",
+    organization: "TTA AI 신뢰성 인증 대응",
     context:
       "AI 시스템의 위험 식별, 평가, 통제, 모니터링 관점에서 TTA 신뢰성 인증 대응 문서를 구성할 때 기준으로 활용했습니다.",
     contribution:
       "위험관리계획서와 위험관리대장을 작성하고 결함 미검출 원인, XAI 근거, 환경 영향 모니터링 항목을 인증 요구사항과 연결했습니다.",
-    evidence: ["위험관리계획서", "위험관리대장", "TTA 신뢰성"],
+    evidence: ["TTA", "위험관리계획서", "위험관리대장", "AI 신뢰성"],
   },
   {
     name: "ISO 9712 / NDT",
     title: "비파괴검사 도메인 이해",
+    organization: "DEEPAI IRIS/NDT 솔루션 개발 업무",
     context:
       "IRIS 검사 데이터와 열교환기 전열관 결함 도메인을 이해하기 위해 NDT 표준과 결함 판정 맥락을 함께 학습했습니다.",
     contribution:
@@ -582,7 +585,10 @@ export function App() {
               <article className="standard-card" key={standard.name}>
                 <div className="standard-head">
                   <span>{standard.name}</span>
-                  <h3>{standard.title}</h3>
+                  <div>
+                    <h3>{standard.title}</h3>
+                    <p>{standard.organization}</p>
+                  </div>
                 </div>
                 <div className="standard-body">
                   <div>

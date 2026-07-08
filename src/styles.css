@@ -1086,6 +1086,14 @@ input {
   line-height: 1.32;
 }
 
+.standard-head p {
+  margin: 9px 0 0;
+  color: #a9f0ff;
+  font-size: 11px;
+  font-weight: 850;
+  line-height: 1.5;
+}
+
 .standard-body {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
