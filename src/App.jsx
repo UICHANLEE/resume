@@ -215,6 +215,48 @@ const caseStudies = [
   },
 ];
 
+const lifespanTasks = [
+  {
+    label: "TASK 1",
+    title: "수명평가 정확도 향상 / 최소두께 추정",
+    problem:
+      "기존 수명평가는 표본 검사와 공식 기반 판단에 의존해 열교환기 전체의 실제 최소두께를 과소 또는 과대 추정할 위험이 있었고, 이로 인해 불필요한 교체나 검사 비용이 발생할 수 있었습니다.",
+    approach:
+      "기존 SK 방법론, 딥아이 내부 극치해석 방법론, 균등 부식 방법론을 비교 축으로 두고 C/W, 결함 종류와 깊이, 가동률 등 손상유발 메커니즘을 AI가 학습할 수 있는 feature 후보로 정리했습니다.",
+    execution:
+      "전수조사 데이터를 기준으로 열교환기 단위 최소두께 추정 모델을 설계하고, top 1/2/3 tube의 max_depth_rate, 결함 label, 최대·평균·중간 깊이, group_count, sector, MRT, 사용기간 같은 입력 구조를 정리했습니다.",
+    result:
+      "추정치와 전수조사 실제 최소값을 비교하는 검증 관점을 세웠고, 과소·과대 추정 방지, 표본 검사 수 감소, 비용 낭비 제거라는 기대효과를 기술적으로 설명할 수 있게 했습니다.",
+    evidence: ["전수조사 데이터", "최소두께 추정", "SK/EVA/균등부식", "C/W·가동률"],
+  },
+  {
+    label: "TASK 2",
+    title: "전열관 별 결함 성장률 예측 / 데이터 피처 설정",
+    problem:
+      "무작위 표본으로 최소두께를 판별하는 방식은 전열관별 결함 성장 속도를 추적하기 어렵고, 후차수 검사에서 어떤 전열관을 우선 확인해야 하는지 근거가 부족했습니다.",
+    approach:
+      "전차수와 현차수의 전열관 위치를 일치시킨 뒤 두께 차이를 결함 성장률의 핵심 신호로 보고, facility가 섞여 평가가 왜곡되지 않도록 공통 facility만 사용하는 기준을 세웠습니다.",
+    execution:
+      "1st 112개 facility와 2nd 105개 facility를 비교해 공통 103개 facility를 선별했고, 1st 데이터는 243,039행에서 233,810행, 2nd 데이터는 229,953행에서 205,804행으로 필터링했습니다. 이후 mdr/gc top 1/2/3, 설계압력, 설계온도, MRT, 사용기간을 예측 feature로 정리했습니다.",
+    result:
+      "전열관별 predict_max_depth_rate를 예측하는 Task2 데이터 기반을 만들었고, 유지보수가 필요한 시점 예측과 후차수 검사 전열관 후보군 선정으로 이어지는 문제 해결 흐름을 만들었습니다.",
+    evidence: ["공통 facility 103개", "233,810 / 205,804 rows", "predict_max_depth_rate", "후차수 후보군"],
+  },
+  {
+    label: "TASK 3",
+    title: "AI 수명평가 서비스 전환 / 검사계획 추천",
+    problem:
+      "Task1과 Task2의 모델 결과가 노트북 실험이나 단일 리포트에 머무르면 현장에서 수명평가 결과를 반복적으로 조회하고 검사계획에 반영하기 어렵습니다.",
+    approach:
+      "AI로 전환하는 수명평가라는 기대효과를 실제 사용 흐름으로 만들기 위해, 모델 결과를 API, 시각화, 결과 리포트, LLM 검사계획 추천으로 나누어 제품화 축을 설계했습니다.",
+    execution:
+      "vis_main, vis_life, vis_exchanger_module, vis_tube_module 4개 모듈을 정리하고, LifeEvaluator의 SK/GS/DeepAI 결과 확인, Weibull/Gumbel 분석, FastAPI `/iris-lifetime` 계열 엔드포인트, Phase1 30% + Phase2 70% 기반 검사계획 로직을 연결했습니다.",
+    result:
+      "수명평가 모델을 현장 사용 가능한 DEEP-NDT 수명평가 시스템 흐름으로 확장했고, 저작권 등록, API 프로토타입, LLM 검사계획까지 이어지는 제품화 경험으로 정리할 수 있게 되었습니다.",
+    evidence: ["4 modules", "FastAPI", "LLM 검사계획", "저작권 등록"],
+  },
+];
+
 const lifespanDeepDive = [
   {
     label: "00",
@@ -570,9 +612,42 @@ export function App() {
           <div className="section-heading">
             <div>
               <h2>IRIS-Life Deep Dive</h2>
-              <p>기존 수명평가와 수명평가 1/2/3을 각각 문제, 접근, 실행, 결과 중심의 자소서 재료로 분리했습니다.</p>
+              <p>수명평가 TASK 1/2/3과 평가 방식 1/2/3을 분리해, 과제 구조와 기술 방법론이 각각 보이도록 정리했습니다.</p>
             </div>
-            <span>baseline → method 1/2/3 → product</span>
+            <span>task track → method track</span>
+          </div>
+
+          <div className="task-track" aria-label="IRIS-Life task breakdown">
+            <div className="track-label">
+              <span>Project Tasks</span>
+              <strong>수명평가 과제 흐름</strong>
+            </div>
+            <div className="task-list">
+              {lifespanTasks.map((task) => (
+                <article className="task-card" key={task.label}>
+                  <div className="task-head">
+                    <span>{task.label}</span>
+                    <h3>{task.title}</h3>
+                  </div>
+                  <div className="task-body">
+                    <StoryStep label="Problem" title="무엇이 문제였나" text={task.problem} />
+                    <StoryStep label="Approach" title="어떻게 접근했나" text={task.approach} />
+                    <StoryStep label="Execution" title="무엇을 실행했나" text={task.execution} />
+                    <StoryStep label="Result" title="어떤 결과를 냈나" text={task.result} highlight />
+                  </div>
+                  <div className="impact-row compact" aria-label={`${task.label} evidence`}>
+                    {task.evidence.map((evidence) => (
+                      <span key={evidence}>{evidence}</span>
+                    ))}
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+
+          <div className="track-label method-track-label">
+            <span>Evaluation Methods</span>
+            <strong>기존 수명평가와 방식 1/2/3</strong>
           </div>
 
           <div className="lifespan-map">
