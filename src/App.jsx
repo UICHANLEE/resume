@@ -25,6 +25,7 @@ const navItems = [
   { id: "lifespan", label: "Lifespan Deep Dive", icon: TrendUp },
   { id: "ip", label: "Intellectual Property", icon: Medal },
   { id: "products", label: "Product Suite", icon: Stack },
+  { id: "archive", label: "SSD Project Archive", icon: FileCode },
   { id: "cases", label: "Case Studies", icon: TrendUp },
   { id: "standards", label: "Standards", icon: ShieldCheck },
   { id: "certificates", label: "Certificates", icon: Certificate },
@@ -80,15 +81,19 @@ const productGroups = [
     items: [
       ["IRIS-Auto", "YOLOv8-seg 기반 결함 탐지"],
       ["IRIS-Life", "FT-Transformer 수명예측"],
+      ["PointCloud", "3D 객체 인식 데이터셋"],
+      ["Soccer AI", "패스 경로 예측 모델링"],
       ["ETRI", "라이프로그 지표 예측"],
     ],
   },
   {
     title: "Product MVP",
     items: [
+      ["SOTA Hub", "논문·모델 비교 플랫폼"],
       ["cashlog", "사진 기반 지출 기록 MVP"],
       ["IMC", "Jira/Confluence 통합 PM 콘솔"],
       ["bread-recipe", "레시피 추천 풀스택 앱"],
+      ["취얼업", "취업정보 사이트"],
     ],
   },
   {
@@ -96,6 +101,7 @@ const productGroups = [
     items: [
       ["domeme", "이커머스 상품 자동화"],
       ["review_bot", "앱 리뷰 수집/분석 파이프라인"],
+      ["Spec Compare", "합격자 스펙 크롤링 분석"],
       ["hotkey", "업무 단축키 매크로 패드"],
     ],
   },
@@ -110,8 +116,15 @@ const skillRows = [
   ["OpenCV", "vision"],
   ["Scikit-Learn", "ml"],
   ["Data Pipelines", "mlops"],
+  ["Next.js", "frontend"],
   ["React", "frontend"],
+  ["Vue.js", "frontend"],
+  ["Node.js", "backend"],
   ["PostgreSQL", "database"],
+  ["SQLite", "database"],
+  ["MariaDB", "database"],
+  ["BeautifulSoup", "crawler"],
+  ["Selenium", "crawler"],
   ["Docker", "infra"],
   ["Vercel", "deploy"],
 ];
@@ -212,6 +225,69 @@ const caseStudies = [
     action: "모델만 교체하지 않고 feature 정의, 샘플링, 분할 기준, 하이퍼파라미터를 순서대로 분리해 실험 로그를 축적했습니다.",
     result: "R2 0.847에서 0.966까지 끌어올려 산업 데이터 예측 모델로 설명 가능한 성능을 만들었습니다.",
     metric: "R2 0.966",
+  },
+];
+
+const projectArchive = [
+  {
+    period: "2025",
+    source: "/Volumes/SSD/포트폴리오",
+    title: "3D Point Cloud 데이터셋 구축",
+    problem:
+      "2D 이미지 라벨링과 달리 3D Point Cloud는 객체의 위치, 공간 관계, 노이즈를 함께 봐야 해서 학습 데이터 품질을 일관되게 유지하기 어렵습니다.",
+    approach:
+      "3D 공간 데이터의 객체 단위 분류와 태깅 기준을 먼저 정리하고, 모델 학습에 필요한 형태로 전처리와 검수 흐름을 분리했습니다.",
+    result:
+      "3D 객체 인식 모델 학습용 고품질 데이터셋 구축 경험을 확보했고, 2D 이미지·IRIS 신호·3D 공간 데이터까지 다른 데이터 형태를 다룬 경험으로 확장했습니다.",
+    tags: ["3D Point Cloud", "Data Labeling", "Preprocessing", "QA"],
+  },
+  {
+    period: "2026",
+    source: "/Volumes/SSD/SOTA",
+    title: "SOTA 모델 관리 플랫폼",
+    problem:
+      "PaperWithCode 종료 이후 여러 출처의 최신 모델, 논문, 리뷰, 벤치마크 정보를 한곳에서 비교하기 어려웠습니다.",
+    approach:
+      "Next.js 프론트엔드와 FastAPI 백엔드를 분리하고, Hugging Face, ArXiv, GitHub 등 다중 소스를 Collector 패턴으로 수집하는 구조를 설계했습니다.",
+    result:
+      "모델 조회·비교, 논문 PDF 분석, Ollama 기반 분야 분류와 블로그 요약 생성까지 연결한 풀스택 AI 리서치 플랫폼으로 구현했습니다.",
+    tags: ["Next.js", "FastAPI", "SQLite", "Ollama", "PDF Analysis"],
+  },
+  {
+    period: "2026",
+    source: "/Volumes/SSD/soccer",
+    title: "축구 패스 경로 예측 모델",
+    problem:
+      "경기 이벤트 데이터만으로 패스 종료 지점을 예측하려면 좌표, 시간, 선수, 팀, 이전 액션 맥락을 모델이 이해할 수 있는 feature로 바꿔야 했습니다.",
+    approach:
+      "거리, 각도, 경기장 영역, 골대까지의 거리, 시간, 선수별 패스 통계, 팀별 패턴을 feature로 만들고 선형 모델, 트리 모델, XGBoost, FT-Transformer를 비교했습니다.",
+    result:
+      "패스 종료 좌표 예측 파이프라인과 시각화 흐름을 구성했고, 산업 데이터에서 사용한 FT-Transformer 경험을 스포츠 이벤트 데이터로 확장했습니다.",
+    tags: ["FT-Transformer", "XGBoost", "Feature Engineering", "Sports Analytics"],
+  },
+  {
+    period: "2023.07 - 2023.09",
+    source: "부경대학교 Bootcamp",
+    title: "취얼업 취업정보 사이트",
+    problem:
+      "취업 준비 과정에서는 채용정보를 흩어진 사이트에서 확인해야 해, 관심 공고를 추적하고 관리하는 흐름이 불편했습니다.",
+    approach:
+      "Vue.js, Node.js, MariaDB 기반으로 프론트엔드, 서버, 데이터베이스 역할을 나누고 팀 단위 GitHub 협업으로 기능을 구현했습니다.",
+    result:
+      "채용정보 수집·관리·추적 기능을 갖춘 웹사이트를 완성하고 발표하며, 첫 풀스택 팀 프로젝트와 버전관리 협업 경험을 쌓았습니다.",
+    tags: ["Vue.js", "Node.js", "MariaDB", "GitHub", "Team Project"],
+  },
+  {
+    period: "2025.03 - 2025.06",
+    source: "부경대학교 캡스톤 디자인",
+    title: "자소서 합격자 스펙 비교 시스템",
+    problem:
+      "지원자가 자신의 스펙을 객관적으로 비교하려면 합격자 데이터가 필요하지만, 공개 자료가 흩어져 있어 직접 수집하고 구조화해야 했습니다.",
+    approach:
+      "BeautifulSoup과 Selenium으로 합격자 스펙 데이터를 수집하고, 비교 가능한 항목으로 정제한 뒤 분석·시각화 흐름을 구성했습니다.",
+    result:
+      "웹 크롤링 기반 데이터 수집, 정제, 비교 분석을 캡스톤 프로젝트로 완성했고, 사용자 의사결정을 돕는 데이터 제품 경험을 만들었습니다.",
+    tags: ["Python", "BeautifulSoup", "Selenium", "Data Analysis", "Capstone"],
   },
 ];
 
@@ -736,6 +812,42 @@ export function App() {
                     <span>{desc}</span>
                   </div>
                 ))}
+              </article>
+            ))}
+          </div>
+        </section>
+
+        <section className="section-panel archive-section" id="archive">
+          <div className="section-heading">
+            <div>
+              <h2>SSD Project Archive</h2>
+              <p>/Volumes/SSD에서 확인한 추가 프로젝트를 문제 해결 경험으로 정리했습니다.</p>
+            </div>
+            <span>additional experience</span>
+          </div>
+
+          <div className="archive-grid">
+            {projectArchive.map((project) => (
+              <article className="archive-card" key={project.title}>
+                <div className="archive-head">
+                  <span>{project.period}</span>
+                  <div>
+                    <h3>{project.title}</h3>
+                    <p>{project.source}</p>
+                  </div>
+                </div>
+
+                <div className="archive-steps">
+                  <StoryStep label="Problem" title="무엇이 문제였나" text={project.problem} />
+                  <StoryStep label="Approach" title="어떻게 접근했나" text={project.approach} />
+                  <StoryStep label="Result" title="어떤 결과를 냈나" text={project.result} highlight />
+                </div>
+
+                <div className="tag-row archive-tags">
+                  {project.tags.map((tag) => (
+                    <span key={tag}>{tag}</span>
+                  ))}
+                </div>
               </article>
             ))}
           </div>
