@@ -1,7 +1,7 @@
 export const companyProfiles = [
   {
-    slug: "한국표준협회",
-    aliases: ["ksa"],
+    slug: "ksa",
+    aliases: ["한국표준협회"],
     company: "한국표준협회",
     role: "AI융합추진단 · AI R&D 사업기획 및 운영관리",
     employment: "파견계약직 1년",
@@ -62,8 +62,8 @@ export const companyProfiles = [
     applicationNote: "공고 본문은 SW 개발이 주요 평가대상이 아니라고 명시합니다. 이 페이지는 코딩 역량보다 정부사업·표준·문서화와 제조 AI 이해를 앞세웠습니다.",
   },
   {
-    slug: "국정원",
-    aliases: ["nis", "국가정보원"],
+    slug: "nis",
+    aliases: ["국정원", "국가정보원"],
     company: "국가정보원",
     role: "2026년 하반기 정기공채 · 과학기술(AI)",
     employment: "특정직 7급",
@@ -124,8 +124,8 @@ export const companyProfiles = [
     applicationNote: "세부 직무기술은 공개 페이지에서 확인되지 않아 정보수집·보안업무를 임의로 작성하지 않았습니다. 제출 전 실제 지원서 문항과 공개 직무안내에 맞춰 표현을 조정해야 합니다.",
   },
   {
-    slug: "BNK시스템",
-    aliases: ["bnk", "bnksystem"],
+    slug: "bnk-system",
+    aliases: ["bnk", "bnksystem", "BNK시스템"],
     company: "BNK시스템",
     role: "2026년도 하반기 신입 · IT개발",
     employment: "정규직",
@@ -186,8 +186,8 @@ export const companyProfiles = [
     applicationNote: "금융 IT·Oracle·Spring 경험은 사실과 다르게 포장하지 않았습니다. 대신 웹·API·DB 연결 경험과 안정적 운영 관점을 전면에 배치했습니다.",
   },
   {
-    slug: "뷰런테크놀로지",
-    aliases: ["vueron", "뷰런"],
+    slug: "vueron",
+    aliases: ["뷰런", "뷰런테크놀로지"],
     company: "뷰런테크놀로지",
     role: "E2E 자율주행 AI Engineer · Junior",
     employment: "정규직",
@@ -248,8 +248,8 @@ export const companyProfiles = [
     applicationNote: "VLM/VLA·자율주행 실차 경험의 공백을 숨기지 않았습니다. 지원 시에는 관련 공개 데이터셋 미니 프로젝트나 논문 재현 결과를 추가하는 것이 필요합니다.",
   },
   {
-    slug: "KB국민은행",
-    aliases: ["kb", "kbbank"],
+    slug: "kb-bank",
+    aliases: ["kb", "kbbank", "KB국민은행"],
     company: "KB국민은행",
     role: "데이터마케팅부 · 마이데이터 서비스 기획·운영",
     employment: "경력직 연봉계약직",
@@ -310,8 +310,8 @@ export const companyProfiles = [
     applicationNote: "이 공고는 경력직이며 마이데이터·금융 플랫폼 경험을 우대합니다. 현재 경험만으로는 직접 적합도가 낮아 지원서에서는 전이 역량을 강조하되 경력을 과장하지 않아야 합니다.",
   },
   {
-    slug: "한국자산평가",
-    aliases: ["kap", "koreaassetpricing"],
+    slug: "korea-asset-pricing",
+    aliases: ["kap", "koreaassetpricing", "한국자산평가"],
     company: "한국자산평가",
     role: "지수사업본부 · 신입 인턴",
     employment: "전환형 인턴",
@@ -373,8 +373,8 @@ export const companyProfiles = [
     applicationNote: "Graph DB와 Java REST API는 직접 경험이 없습니다. 대신 Python REST·RDBMS와 다중 소스 수집 구조를 구체적인 증거로 제시했습니다.",
   },
   {
-    slug: "한국재정정보원",
-    aliases: ["fis", "kpfis"],
+    slug: "kpfis",
+    aliases: ["fis", "한국재정정보원"],
     company: "한국재정정보원",
     role: "일반직 5급 · 시스템운영",
     employment: "정규직",
@@ -445,7 +445,10 @@ export function getCompanyProfile(pathname) {
 
   if (!route || route === "resume") return null;
 
+  const normalizedRoute = route.toLowerCase();
   return companyProfiles.find(
-    (profile) => profile.slug === route || profile.aliases.includes(route.toLowerCase()),
+    (profile) =>
+      profile.slug.toLowerCase() === normalizedRoute ||
+      profile.aliases.some((alias) => alias.toLowerCase() === normalizedRoute),
   );
 }
