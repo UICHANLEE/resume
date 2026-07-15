@@ -18,6 +18,8 @@ import {
   Stack,
   TrendUp,
 } from "@phosphor-icons/react";
+import { CompanyResume } from "./CompanyResume.jsx";
+import { companyProfiles, getCompanyProfile } from "./companyProfiles.js";
 
 const navItems = [
   { id: "about", label: "About", icon: IdentificationBadge },
@@ -26,6 +28,7 @@ const navItems = [
   { id: "ip", label: "Intellectual Property", icon: Medal },
   { id: "products", label: "Product Suite", icon: Stack },
   { id: "archive", label: "SSD Project Archive", icon: FileCode },
+  { id: "company-pages", label: "Company Pages", icon: Briefcase },
   { id: "cases", label: "Case Studies", icon: TrendUp },
   { id: "standards", label: "Standards", icon: ShieldCheck },
   { id: "certificates", label: "Certificates", icon: Certificate },
@@ -468,9 +471,10 @@ const standards = [
   },
 ];
 
-export function App() {
+function PortfolioApp() {
   const [active, setActive] = useState("about");
   const [query, setQuery] = useState("");
+  const companyPathPrefix = window.location.pathname.startsWith("/resume") ? "/resume/" : "/";
 
   useEffect(() => {
     const sections = navItems.map((item) => document.getElementById(item.id));
@@ -853,6 +857,33 @@ export function App() {
           </div>
         </section>
 
+        <section className="section-panel company-index-section" id="company-pages">
+          <div className="section-heading">
+            <div>
+              <h2>Company Tailored Resume</h2>
+              <p>채용공고의 요구사항과 실제 경험을 연결한 회사별 이력서·자기소개서입니다.</p>
+            </div>
+            <span>7 applications</span>
+          </div>
+
+          <div className="company-index-grid">
+            {companyProfiles.map((profile) => (
+              <a
+                className="company-index-card"
+                href={`${companyPathPrefix}${encodeURIComponent(profile.slug)}`}
+                key={profile.slug}
+              >
+                <span>{profile.company.slice(0, 2)}</span>
+                <div>
+                  <strong>{profile.company}</strong>
+                  <p>{profile.role}</p>
+                </div>
+                <ArrowSquareOut size={16} weight="bold" />
+              </a>
+            ))}
+          </div>
+        </section>
+
         <section className="section-panel band" id="cases">
           <div className="section-heading">
             <div>
@@ -1004,6 +1035,11 @@ export function App() {
       </main>
     </div>
   );
+}
+
+export function App() {
+  const profile = getCompanyProfile(window.location.pathname);
+  return profile ? <CompanyResume profile={profile} /> : <PortfolioApp />;
 }
 
 function StoryStep({ label, title, text, highlight = false }) {
