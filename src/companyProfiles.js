@@ -434,6 +434,262 @@ export const companyProfiles = [
     skills: ["Python", "FastAPI", "SQLD", "React/Vue.js", "ISO 29110", "성능 최적화"],
     applicationNote: "공고의 블라인드 채용 원칙을 고려해 회사별 페이지에서는 직무 증거를 중심으로 구성했습니다. 실제 지원서에는 학교명·출신지 등 편견 요소가 노출되지 않도록 별도 점검이 필요합니다.",
   },
+  {
+    slug: "kakao-healthcare",
+    aliases: ["kakaohealthcare", "카카오헬스케어"],
+    company: "카카오헬스케어",
+    role: "FHIR/의료데이터 플랫폼 개발자",
+    employment: "정규직 · 경력 3년 이상",
+    deadline: "상시채용",
+    checkedAt: "2026.07.24",
+    sourceUrl: "https://zighang.com/recruitment/9f7c36e8-9906-49c9-a62e-31e8f1e3ac18",
+    sourceLabel: "직행 공고",
+    headline: "복잡한 의료데이터를 검증 가능한 API와 표준화 흐름으로 연결하는 개발자",
+    positioning:
+      "HL7 FHIR 실무 경력을 보유했다고 과장하지 않았습니다. 대신 Python 기반 데이터 변환·검증, FastAPI 제품화, 의료영상·라이프로그 분석, ISO 29110·TTA 표준 대응 경험을 FHIR 플랫폼 개발에 전이 가능한 근거로 구성했습니다.",
+    jobSummary:
+      "EMR·CDW·연구 데이터를 FHIR Resource로 분석·매핑하고 Profile, Extension, ValueSet, CodeSystem을 정의하며 FHIR Server·API·데이터 변환 파이프라인을 개발하는 경력직입니다. Java·Kotlin·Python과 의료데이터 시스템 연계 경험을 요구합니다.",
+    keywords: ["HL7 FHIR", "의료데이터", "Python", "REST API", "데이터 검증", "상호운용성"],
+    fitPoints: [
+      { value: "FastAPI", label: "데이터 API", detail: "산업 평가 로직을 검증·조회 가능한 REST 엔드포인트로 제품화" },
+      { value: "2 Domains", label: "의료 AI 탐색", detail: "MRNet MRI 분류와 흉부 CT 데이터 분석 프로젝트" },
+      { value: "4 Standards", label: "표준 대응", detail: "TTA·KTL·ISO 29110·ISO/IEC 23894 요구 추적 경험" },
+    ],
+    requirements: [
+      { requirement: "FHIR 기반 데이터 교류·매핑", evidence: "FHIR Resource·Profile 실무는 없으나, 서로 다른 수명평가 입력·계산·출력을 공통 모델과 API 계약으로 통합한 경험", signal: "보완 명시" },
+      { requirement: "백엔드·데이터 엔지니어링", evidence: "Python·FastAPI·Pydantic 기반 REST API, Pandas 전처리, PostgreSQL·SQLite·MariaDB 활용", signal: "핵심 강점" },
+      { requirement: "의료데이터 시스템 이해", evidence: "Stanford MRNet MRI ACL 분류와 COVID 흉부 CT 탐색, ETRI 수면·라이프로그 예측 프로젝트", signal: "전이 가능" },
+      { requirement: "표준 요구를 기술 설계로 전환", evidence: "ISO 29110·ISO/IEC 23894·TTA 요구사항을 데이터·모델·API·위험관리 산출물에 매핑", signal: "차별점" },
+    ],
+    stories: [
+      {
+        title: "서로 다른 평가 방식을 하나의 데이터 계약으로 통합",
+        problem: "기존 공식, 고객사 기준, 극치해석, AI 예측이 서로 다른 입력과 결과 형식을 사용해 API 연계와 검증 기준을 일관되게 유지하기 어려웠습니다.",
+        action: "각 방식의 입력·계산·출력을 먼저 정의하고 LifeEvaluator 클래스로 3개 평가 방식을 모듈화했습니다. Pydantic 스키마와 FastAPI 엔드포인트를 연결해 업로드, 평가, 결과 조회, 파일 생성 흐름을 분리했습니다.",
+        result: "R2 0.966 예측 모델을 포함한 수명평가 로직을 반복 검증 가능한 REST 서비스로 전환하고, 변경 시 영향 범위를 데이터 계약 단위로 추적할 수 있게 했습니다.",
+        tags: ["FastAPI", "Pydantic", "Data Contract", "Validation"],
+      },
+      {
+        title: "의료영상 데이터를 모델 입력으로 구조화",
+        problem: "MRI 검사는 시퀀스와 슬라이스 구조를 가지므로 일반 이미지처럼 한 장씩 처리하면 환자 단위 판단과 데이터 일관성을 유지하기 어렵습니다.",
+        action: "Stanford MRNet 데이터를 대상으로 nibabel·pydicom·SimpleITK·OpenCV를 사용해 영상 구조를 확인하고, ResNet-18 기반 ACL 파열 분류와 앙상블 흐름을 구성했습니다.",
+        result: "의료영상의 계층 구조와 환자 단위 검증 필요성을 학습했고, 데이터 형식과 임상 의미를 먼저 이해한 뒤 모델 입력을 설계하는 경험을 확보했습니다.",
+        tags: ["Medical Imaging", "PyTorch", "DICOM", "ResNet-18"],
+      },
+      {
+        title: "표준 요구사항을 구현·검증 근거에 연결",
+        problem: "TTA 신뢰성, ISO 29110, AI 위험관리 요구가 각각 다른 문서에 있어 실제 시스템 구현과 심사 근거 사이의 추적성이 약했습니다.",
+        action: "요구사항을 데이터, 모델, API, 개발 산출물, 위험 통제로 분해하고 미검출·환경 변화·설명 가능성 이슈를 ISO/IEC 23894 위험관리 항목에 연결했습니다.",
+        result: "TTA 신뢰성 중간심사를 통과하고 UIPA 품질체계 진단에서 시스템과 산출물의 정합성을 높였습니다.",
+        tags: ["ISO 29110", "TTA", "Traceability", "Risk"],
+      },
+    ],
+    coverLetters: [
+      {
+        title: "지원동기와 직무 적합성",
+        body: "의료데이터의 가치는 많은 데이터를 모으는 데서 끝나지 않고, 서로 다른 기관과 서비스가 같은 의미로 교환하고 검증할 수 있을 때 실현된다고 생각합니다. 저는 산업용 AI 시스템에서 흩어진 평가 방식과 데이터 구조를 공통 계약으로 정리하고 FastAPI 서비스로 제품화했습니다. 또한 MRI·CT 의료영상과 수면·라이프로그 데이터를 다루며 도메인 구조를 먼저 이해해야 모델과 서비스의 오류를 줄일 수 있다는 점을 배웠습니다. HL7 FHIR 실무 경력은 아직 없지만, 표준 요구사항을 구현 근거로 바꾼 ISO 29110·TTA 대응 경험과 Python 데이터 엔지니어링 역량을 바탕으로 FHIR Resource와 Terminology를 빠르게 학습하고 카카오헬스케어 서비스의 상호운용성과 데이터 품질 향상에 기여하겠습니다.",
+      },
+      {
+        title: "표준과 제품을 연결한 문제 해결 경험",
+        body: "수명평가 시스템은 기존 공식, 고객사 방식, 극치해석, AI 예측이 서로 다른 입력과 결과를 사용해 하나의 서비스로 연결하기 어려웠습니다. 저는 각 방식의 필수 필드와 계산 책임을 분리하고 LifeEvaluator와 Pydantic 스키마로 공통 계약을 정의했습니다. 이어 업로드, 평가, 결과 조회, 파일, LLM 검사계획 API를 구성해 데이터가 들어와 검증되고 결과가 전달되는 흐름을 명확히 했습니다. 그 결과 R2 0.966 모델을 단발성 실험이 아닌 반복 사용 가능한 서비스로 전환했습니다. FHIR 개발에서도 의료기관별 데이터를 무리하게 하나로 맞추기보다 Resource, Profile, Terminology와 검증 규칙의 책임을 구분하고 변경 가능한 연계 구조를 만들겠습니다.",
+      },
+    ],
+    skills: ["Python", "FastAPI/Pydantic", "PyTorch", "Medical Imaging", "ISO 29110", "데이터 검증"],
+    applicationNote: "이 공고는 FHIR·EMR/CDW 연계 실무를 요구하는 3년 이상 경력직입니다. HL7 FHIR Certification과 실제 FHIR Server 구축 경험은 없으므로 지원 전 HAPI FHIR 또는 Firely 기반 미니 연계 프로젝트로 공백을 보완해야 합니다.",
+  },
+  {
+    slug: "injewelme",
+    aliases: ["인절미", "인졀미"],
+    company: "인졀미",
+    role: "서비스 운영·SW 개발자 · DHV 자사 서비스 담당",
+    employment: "6개월 계약직 · 경력 4년 이하",
+    deadline: "D-25 · 2026.07.24 확인",
+    checkedAt: "2026.07.24",
+    sourceUrl: "https://zighang.com/recruitment/77abcc2c-7ccb-4127-a8df-5c40b45f9e17",
+    sourceLabel: "직행 공고",
+    headline: "서비스 상태를 관찰하고, 반복되는 운영 문제를 코드로 줄이는 개발자",
+    positioning:
+      "DeepHealthVision 웹·앱 운영 지원에 맞춰 API·데이터 흐름 이해, Git 협업, Docker·Vercel·Fly.io 배포, 로그 기반 성능 개선과 반복 업무 자동화 경험을 중심으로 구성했습니다.",
+    jobSummary:
+      "비접촉 생체신호 측정 서비스 DHV의 접속·데이터 수집·서버/API·앱 상태를 모니터링하고 이슈를 정리합니다. 이후 관리자 기능, 프론트엔드·백엔드 수정, 테스트, 운영 자동화와 유지보수로 역할을 확장하는 포지션입니다.",
+    keywords: ["서비스 운영", "모니터링", "REST API", "GitHub", "자동화", "Docker"],
+    fitPoints: [
+      { value: "35→22s", label: "운영 개선", detail: "처리시간 병목을 측정하고 파이프라인 응답 지연 개선" },
+      { value: "Full Stack", label: "웹 구조 이해", detail: "React·Next.js·Vue.js와 FastAPI·Node.js·DB 연결" },
+      { value: "3 Deploys", label: "배포 경험", detail: "Vercel·Fly.io·Docker 기반 서비스 배포" },
+    ],
+    requirements: [
+      { requirement: "웹·앱 구조와 API 데이터 흐름", evidence: "React·Next.js·Vue.js 프론트엔드와 FastAPI·Node.js·PostgreSQL·MariaDB를 연결한 프로젝트", signal: "핵심 강점" },
+      { requirement: "서비스 상태 점검·이슈 기록", evidence: "AI 자동평가 파이프라인의 정확도·처리시간 병목을 분리 측정하고 실험 로그와 인증 문서로 관리", signal: "직접 경험" },
+      { requirement: "Git 기반 협업과 코드 수정", evidence: "GitHub 팀 프로젝트와 IRIS 모델 26회 버전 흐름 중 샘플링 로직·파라미터 코드 기여", signal: "직접 경험" },
+      { requirement: "AWS·운영 모니터링", evidence: "Docker·Vercel·Fly.io 배포 경험은 있으나 AWS 운영과 관측 도구 실무는 추가 학습 필요", signal: "보완 명시" },
+    ],
+    stories: [
+      {
+        title: "느린 평가 파이프라인의 병목을 수치로 분리",
+        problem: "자동평가 파이프라인에서 SVR 처리 시간이 길어 운영자가 결과를 반복 확인하고 QA하는 속도가 떨어졌습니다.",
+        action: "정확도와 처리시간을 별도 지표로 기록하고 n_jobs·epsilon·C 조정과 KernelRidge·FastPoly 대체 모델을 같은 조건에서 비교했습니다.",
+        result: "기준 처리시간을 35초에서 22초로 줄였고, 대체 모델에서는 25초에서 6초까지 단축 가능성을 확인해 운영 선택지를 제시했습니다.",
+        tags: ["Monitoring", "Performance", "Issue Log"],
+      },
+      {
+        title: "촬영 웹앱을 배포 가능한 서비스로 완성",
+        problem: "카메라 촬영, 합성, QR 공유를 한 흐름에서 제공하려면 브라우저 권한, 클라이언트 상태, 업로드 서버와 배포 환경을 함께 맞춰야 했습니다.",
+        action: "React·TypeScript·PWA로 촬영 화면을 구성하고 Node.js·Express 업로드 서버를 연결했습니다. Docker·Fly.io와 Vercel로 실행 환경을 분리해 배포했습니다.",
+        result: "촬영부터 이미지 합성·업로드·QR 공유까지 동작하는 네컷 부스 웹앱을 완성해 프론트엔드와 API의 운영 경계를 경험했습니다.",
+        tags: ["React", "TypeScript", "Express", "Docker"],
+      },
+      {
+        title: "반복 수집 업무를 자동화 파이프라인으로 전환",
+        problem: "앱 리뷰와 상품 데이터를 반복해서 수집·정리하는 과정은 누락과 형식 불일치가 잦아 분석 전에 많은 수작업이 필요했습니다.",
+        action: "Python·Node.js 수집기를 만들고 데이터 정제, Excel 산출, 감성·키워드 분석 흐름을 모듈화했습니다. 오류가 발생한 단계와 입력 조건을 확인할 수 있도록 실행 결과를 구분했습니다.",
+        result: "반복 수집부터 분석용 파일 생성까지의 수작업을 줄이고, 동일 조건으로 다시 실행할 수 있는 운영 도구를 만들었습니다.",
+        tags: ["Automation", "Python", "Node.js", "Data Pipeline"],
+      },
+    ],
+    coverLetters: [
+      {
+        title: "지원동기와 서비스 운영 관점",
+        body: "AI 서비스의 신뢰는 모델 점수만으로 만들어지지 않습니다. 접속 상태, 데이터 수집, API 응답, 오류 기록이 안정적으로 이어져야 연구와 실제 사용자가 같은 결과를 얻을 수 있습니다. 저는 산업용 AI 제품에서 모델을 FastAPI로 서비스화하고, 처리시간 병목을 35초에서 22초로 개선했으며, 데이터 품질과 오류 원인을 문서로 추적했습니다. React·TypeScript·Node.js 기반 웹앱을 Docker·Vercel·Fly.io에 배포한 경험도 있습니다. DHV 운영에서는 체크리스트를 단순 반복하는 데 그치지 않고 상태와 오류를 재현 가능한 형태로 기록하고, 반복되는 조치를 테스트와 자동화 코드로 전환하겠습니다.",
+      },
+      {
+        title: "운영 문제를 개선한 경험",
+        body: "자동평가 파이프라인의 응답이 느려질 때 처음부터 모델을 교체하지 않았습니다. 처리 단계별 시간을 분리하고 정확도와 지연시간을 같은 실험표에 기록했습니다. 이후 기존 SVR의 병렬 처리와 파라미터를 조정하고 대체 모델을 동일 조건에서 비교했습니다. 그 결과 기준 처리시간을 35초에서 22초로 줄였고, 대체안에서는 6초까지 단축 가능성을 확인했습니다. 이 경험을 바탕으로 DHV에서도 접속, 데이터 수집, API, 앱 동작을 구간별로 관찰하고 재현 조건과 영향 범위를 명확히 공유하겠습니다.",
+      },
+    ],
+    skills: ["React/TypeScript", "FastAPI", "Node.js", "GitHub", "Docker/Vercel", "운영 자동화"],
+    applicationNote: "공고 본문에는 '인턴 포지션' 표현이 있으나 상단 채용 유형은 6개월 계약직으로 표시됩니다. 지원 전 고용형태를 확인하고, AWS·로그 모니터링 도구 경험 공백은 배포 프로젝트의 운영 기록으로 보완하는 편이 좋습니다.",
+  },
+  {
+    slug: "medibible",
+    aliases: ["메디바이블", "medibible"],
+    company: "메디바이블",
+    role: "피부과 업무 프로세스 효율화 프로그램 개발",
+    employment: "정규직 · 신입 지원 가능",
+    deadline: "상시채용",
+    checkedAt: "2026.07.24",
+    sourceUrl: "https://zighang.com/recruitment/40f237ab-fa57-4ebc-bb90-c3d51b30b86b",
+    sourceLabel: "직행 공고",
+    headline: "현장의 반복 업무를 AI와 웹 제품으로 빠르게 바꾸는 풀스택 실행자",
+    positioning:
+      "Next.js·React·TypeScript, FastAPI·Node.js, PostgreSQL·Redis, Docker·Vercel 배포와 AI 기반 자동화 프로젝트를 병원 예약·응대·교육·운영 도구 개발에 직접 연결했습니다.",
+    jobSummary:
+      "Claude Code·Codex 기반 웹 개발, 병원 예약·응대 자동화, AI Agent 자료수집·커뮤니케이션 시스템, AWS 배포·CI/CD·DB·로그·장애·보안 운영을 함께 맡는 폭넓은 풀스택 포지션입니다.",
+    keywords: ["AI Agent", "Next.js", "React", "업무 자동화", "DevOps", "병원 운영"],
+    fitPoints: [
+      { value: "15+", label: "제품 프로젝트", detail: "AI·웹·자동화 MVP를 직접 설계하고 구현" },
+      { value: "25 Devices", label: "실사용 운영", detail: "동시 참여형 웹앱과 Redis 상태 동기화" },
+      { value: "Full Stack", label: "공고 스택", detail: "Next.js·React·Node.js·PostgreSQL·Vercel" },
+    ],
+    requirements: [
+      { requirement: "AI 도구 기반 웹 개발", evidence: "Codex·LLM을 활용한 React·Next.js·FastAPI 제품 구현, PDF 분석·분류·요약·검사계획 자동화", signal: "핵심 강점" },
+      { requirement: "병원 업무 자동화·AI Agent", evidence: "다중 소스 Collector, 앱 리뷰·이커머스 수집 자동화, Google Sheets 기반 실시간 관리 도구", signal: "전이 가능" },
+      { requirement: "실서비스 배포·운영", evidence: "Vercel·Fly.io·Docker·Upstash Redis 기반 웹앱 배포와 동시 사용자 상태 관리", signal: "직접 경험" },
+      { requirement: "AWS·CI/CD·보안 운영", evidence: "Docker·Vercel 운영 경험은 있으나 AWS EC2와 정식 온콜·권한관리 실무는 추가 확보 필요", signal: "보완 명시" },
+    ],
+    stories: [
+      {
+        title: "25대 기기의 동시 진행 상태를 웹으로 통합",
+        problem: "행사 참가자 25명이 각 휴대폰에서 같은 시나리오를 진행하려면 화면 전환 시점과 상태가 어긋나지 않아야 했습니다.",
+        action: "Vanilla JavaScript 화면과 Vercel Serverless API, Upstash Redis를 연결해 진행 상태를 서버에서 공유하고 기기별 화면이 같은 순서를 따르도록 구성했습니다.",
+        result: "별도 앱 설치 없이 25대 휴대폰이 동시에 참여하는 행사 웹앱을 운영해 다중 사용자 상태와 장애 영향을 고려한 제품 경험을 만들었습니다.",
+        tags: ["Vercel", "Serverless", "Redis", "Operations"],
+      },
+      {
+        title: "명단 선택과 관리자 집계를 하나의 업무 도구로 구현",
+        problem: "참여자 선택 결과를 수기로 취합하면 중복·누락을 확인하기 어렵고 관리자가 실시간 현황을 파악할 수 없었습니다.",
+        action: "Next.js·React·TypeScript·SWR·Zod로 입력과 검증을 구성하고 Google Sheets API를 데이터 저장·집계 흐름에 연결했습니다.",
+        result: "사용자 입력과 관리자 실시간 집계를 한 서비스로 연결해 반복 취합 업무와 데이터 확인 단계를 줄였습니다.",
+        tags: ["Next.js", "TypeScript", "SWR", "Zod"],
+      },
+      {
+        title: "다중 소스 자료수집을 AI 리서치 플랫폼으로 자동화",
+        problem: "최신 AI 모델과 논문 정보가 Hugging Face, ArXiv, GitHub에 흩어져 있어 수집·비교·요약을 반복해야 했습니다.",
+        action: "Collector 패턴으로 소스별 수집 책임을 분리하고 Next.js·FastAPI·SQLite·Ollama를 연결해 PDF 분석, 분야 분류, 요약 생성 흐름을 구현했습니다.",
+        result: "자료수집부터 AI 분석과 화면 제공까지 이어지는 SOTA 모델 관리 플랫폼을 완성해 에이전트형 업무 자동화의 기반을 만들었습니다.",
+        tags: ["AI Automation", "FastAPI", "Ollama", "Collector"],
+      },
+    ],
+    coverLetters: [
+      {
+        title: "지원동기와 제품 실행력",
+        body: "병원 업무의 효율화는 거대한 시스템을 한 번에 만드는 일보다 예약, 응대, 교육, 재고처럼 반복되는 불편을 정확히 찾고 작동하는 도구로 빠르게 바꾸는 과정이라고 생각합니다. 저는 Next.js·React·TypeScript와 FastAPI·Node.js로 여러 웹 제품을 만들고 Vercel·Docker·Fly.io·Redis 환경에 배포했습니다. 25대 휴대폰이 동시에 사용하는 행사 앱, Google Sheets 기반 실시간 관리자 도구, 다중 소스 AI 리서치 자동화 플랫폼을 직접 구현하며 사용자 흐름부터 데이터와 운영까지 연결했습니다. 메디바이블에서도 AI 도구를 코드 생성에만 사용하지 않고 문제 정의, 테스트, 문서화, 운영 자동화까지 이어지는 개발 환경을 만들겠습니다.",
+      },
+      {
+        title: "복잡한 운영 흐름을 단순화한 경험",
+        body: "25명이 각자 휴대폰으로 참여하는 행사에서는 화면 전환이 한 번만 어긋나도 전체 진행이 멈출 수 있었습니다. 저는 클라이언트마다 상태를 따로 보관하지 않고 Vercel Serverless API와 Upstash Redis를 통해 공통 진행 상태를 관리했습니다. 참가자는 별도 설치 없이 웹에 접속했고, 운영자는 중앙에서 흐름을 제어할 수 있었습니다. 그 결과 25대 기기에서 같은 시나리오를 안정적으로 운영했습니다. 병원 업무 도구에서도 예약·응대·교육의 상태와 책임 위치를 먼저 정의하고, 실패 시 복구 가능한 작은 기능부터 배포하겠습니다.",
+      },
+    ],
+    skills: ["Next.js/React", "TypeScript", "FastAPI/Node.js", "PostgreSQL/Redis", "Docker/Vercel", "AI 자동화"],
+    applicationNote: "피부과·성형외과 근무와 AWS EC2 운영 경력은 없습니다. 의료영상 프로젝트와 웹 제품 운영 경험은 관련 관심의 근거로만 사용하고, 환자정보·예약 데이터에는 최소권한·감사로그·비식별화 원칙을 별도로 준비해야 합니다.",
+  },
+  {
+    slug: "khis",
+    aliases: ["한국보건의료정보원", "korea-health-information-service"],
+    company: "한국보건의료정보원",
+    role: "전산직 6급 · 정보화사업기획 및 시스템개발·운영(AI 활용)",
+    employment: "일반직 · 정규직",
+    deadline: "D-12 · 2026.07.24 확인",
+    checkedAt: "2026.07.24",
+    sourceUrl: "https://zighang.com/recruitment/e8516e8b-a987-473a-a6bc-34cc1e303905",
+    sourceLabel: "직행 공고",
+    headline: "AI 기술과 공공사업 품질을 함께 이해하는 보건의료 정보화 실무자",
+    positioning:
+      "전산직 6급 AI 활용 분야의 사업기획·운영지원, 시스템 모니터링, 기초 데이터 정리·품질점검에 맞춰 UIPA 사업, 산업 AI 데이터 QA, FastAPI 운영, SQLD와 의료 AI 프로젝트를 연결했습니다.",
+    jobSummary:
+      "보건의료정보 AI 활용사업과 플랫폼의 기획·관리·운영을 지원하고, AI 서비스 운영 현황 모니터링, 의료데이터 기초 정리·품질점검, 정보화사업 구축·품질관리를 수행하는 일반직 전산직 6급입니다.",
+    keywords: ["보건의료정보", "AI 활용사업", "정보화사업", "데이터 품질", "시스템 운영", "공공기관"],
+    fitPoints: [
+      { value: "UIPA", label: "공공사업", detail: "품질체계 진단과 인증 산출물 대응 경험" },
+      { value: "50K+", label: "데이터 품질", detail: "라벨링·검수·재학습 기준을 운영한 산업 AI 데이터" },
+      { value: "SQLD", label: "전산 역량", detail: "Python·SQL·API·RDBMS 기반 시스템 구현" },
+    ],
+    requirements: [
+      { requirement: "AI 활용사업 기획·운영지원", evidence: "UIPA 사업 맥락에서 AI 시스템 목표·위험·품질 요구를 산출물과 인증 일정에 연결", signal: "핵심 강점" },
+      { requirement: "AI 서비스 모니터링·관리", evidence: "모델 성능, 데이터 오류, 처리시간, 환경 영향과 운영 위험을 지표·로그·위험관리대장으로 관리", signal: "직접 경험" },
+      { requirement: "의료데이터 정리·품질점검", evidence: "50,000건 산업 AI 데이터 QA와 MRI·CT·수면 라이프로그 의료데이터 프로젝트", signal: "전이 가능" },
+      { requirement: "공공기관 정보화사업·클라우드", evidence: "공공사업 품질 대응은 있으나 공공기관 발주·예산·조달 및 클라우드 구축 실무는 추가 학습 필요", signal: "보완 명시" },
+    ],
+    stories: [
+      {
+        title: "UIPA 사업의 AI 품질 요구를 추적 가능한 체계로 전환",
+        problem: "TTA 신뢰성, KTL, ISO 29110, AI 위험관리 요구가 서로 다른 문서와 일정에 흩어져 개발 결과와 공공사업 평가 근거가 연결되지 않았습니다.",
+        action: "기관별 요구사항을 데이터, 모델, 소프트웨어 산출물, 위험 통제로 분해하고 ISO/IEC 23894 위험관리계획서·대장과 시스템 설명서를 실제 구현 근거에 매핑했습니다.",
+        result: "2025년 8월 TTA 신뢰성 중간심사를 통과하고 UIPA 품질체계 진단과 KTL·ISO 29110 대응에서 산출물 정합성을 높였습니다.",
+        tags: ["UIPA", "TTA", "ISO 29110", "Quality"],
+      },
+      {
+        title: "데이터 품질 문제를 AI 성능 개선으로 연결",
+        problem: "결함 유형과 라벨 기준이 작업자마다 달라 오탐·미탐의 원인이 데이터인지 모델인지 구분하기 어려웠습니다.",
+        action: "IP·IC·EP·EC 결함 기준을 학습 단위로 재정의하고 CVAT·ROBOFLOW 기반 라벨링, 검수, 재라벨링 절차가 같은 규칙을 사용하도록 운영했습니다.",
+        result: "50,000건 이상의 데이터에서 라벨 오류를 약 15% 줄이고 결함 탐지 정확도 98% 달성에 기여했습니다.",
+        tags: ["Data Quality", "Monitoring", "YOLOv8-seg"],
+      },
+      {
+        title: "의료·라이프로그 데이터의 개인 차이를 검증 설계에 반영",
+        problem: "수면·활동 데이터는 같은 사람의 기록이 학습과 검증에 섞이면 실제 신규 사용자 성능보다 결과가 높게 나타날 수 있었습니다.",
+        action: "ETRI 라이프로그 프로젝트에서 시간대별 활동 윈도우 feature를 구성하고 피험자 단위 GroupKFold로 LightGBM·XGBoost·CatBoost 앙상블을 비교했습니다.",
+        result: "의료·생활 데이터에서 개인 단위 분할과 재현 가능한 검증이 중요하다는 원칙을 확보하고 산업 데이터의 facility 분할 경험을 사람 중심 데이터로 확장했습니다.",
+        tags: ["Lifelog", "GroupKFold", "Data Governance"],
+      },
+    ],
+    coverLetters: [
+      {
+        title: "지원동기와 직무수행 방향",
+        body: "보건의료 AI 서비스는 기술을 도입하는 것보다 데이터 품질과 운영 상태를 지속적으로 확인하고, 공공사업의 목표와 성과 근거를 연결하는 일이 중요하다고 생각합니다. 저는 UIPA 사업 맥락에서 TTA·KTL·ISO 29110 요구를 AI 시스템의 데이터, 모델, 위험관리, 개발 산출물에 매핑했습니다. 또한 50,000건 이상의 산업 데이터를 운영하며 라벨 오류를 줄였고 FastAPI 서비스와 처리시간 지표를 관리했습니다. 한국보건의료정보원에서는 사업 요구사항을 기술 언어로 구체화하고, 의료데이터 품질 기준과 AI 서비스 운영 지표를 추적해 국민이 신뢰할 수 있는 보건의료 정보화 기반을 만드는 데 기여하겠습니다.",
+      },
+      {
+        title: "직무 관련 문제 해결 경험",
+        body: "AI 신뢰성 인증을 준비할 때 문제는 문서의 부족이 아니라 심사 요구와 실제 구현 근거가 연결되지 않는 것이었습니다. 저는 요구사항을 데이터 품질, 모델 성능, 소프트웨어 산출물, 운영 위험으로 나누고 각 근거의 책임 위치를 추적표에 정리했습니다. 결함 미검출, 환경 변화, 설명 가능성은 ISO/IEC 23894 위험관리 항목으로 구조화했습니다. 그 결과 TTA 중간심사를 통과하고 UIPA 품질체계 진단의 산출물 정합성을 높였습니다. 입사 후에도 정보화사업의 요구사항, 데이터, 시스템 상태, 성과지표가 같은 기준으로 관리되도록 지원하겠습니다.",
+      },
+      {
+        title: "입사 후 계획",
+        body: "초기에는 기관의 보건의료정보 사업 구조와 의료데이터 품질 기준, 개인정보보호·보안 지침, 사업관리 절차를 우선 학습하겠습니다. 이후 AI 서비스의 데이터 수집·정제·검증·배포·모니터링 단계를 지표로 정리하고, 장애와 품질 이슈가 사업 요구사항과 연결되도록 추적 체계를 만들겠습니다. Python·SQL·FastAPI 경험을 활용해 반복 점검은 자동화하되, 공공기관의 변경관리와 승인 절차를 준수하겠습니다. 장기적으로는 현장과 정책 담당자가 함께 이해할 수 있는 AI 활용사업의 성과·위험 관리 체계를 만드는 전산 실무자로 성장하겠습니다.",
+      },
+    ],
+    skills: ["Python", "SQLD", "FastAPI", "데이터 품질", "UIPA·ISO 29110", "AI 위험관리"],
+    applicationNote: "전산직 6급 AI 활용 분야를 기준으로 작성했습니다. 실제 지원서에는 학교명·성별·연령·출신지 등 블라인드 항목을 제거하고, 경력·자격증은 증빙 가능한 내용만 기재해야 합니다.",
+  },
 ];
 
 export function getCompanyProfile(pathname) {

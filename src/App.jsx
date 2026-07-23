@@ -863,7 +863,7 @@ function PortfolioApp() {
               <h2>Company Tailored Resume</h2>
               <p>채용공고의 요구사항과 실제 경험을 연결한 회사별 이력서·자기소개서입니다.</p>
             </div>
-            <span>7 applications</span>
+            <span>{companyProfiles.length} applications</span>
           </div>
 
           <div className="company-index-grid">

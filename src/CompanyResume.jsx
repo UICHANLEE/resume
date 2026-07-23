@@ -214,7 +214,7 @@ export function CompanyResume({ profile }) {
             <IdentificationCard size={18} weight="bold" />
             <strong>이의찬 · Machine Learning Engineer</strong>
           </div>
-          <p>{profile.company} 맞춤 이력서 · 공고 확인 기준 2026.07.15</p>
+          <p>{profile.company} 맞춤 이력서 · 공고 확인 기준 {profile.checkedAt || "2026.07.15"}</p>
         </footer>
       </main>
     </div>
