@@ -8,6 +8,7 @@ import {
   Code,
   EnvelopeSimple,
   FileCode,
+  FilePdf,
   GithubLogo,
   GraduationCap,
   IdentificationBadge,
@@ -18,6 +19,7 @@ import {
   Stack,
   TrendUp,
 } from "@phosphor-icons/react";
+import { AiEngineerResume } from "./AiEngineerResume.jsx";
 import { CompanyResume } from "./CompanyResume.jsx";
 import { companyProfiles, getCompanyProfile } from "./companyProfiles.js";
 
@@ -570,6 +572,13 @@ function PortfolioApp() {
                 </a>
                 <a
                   className="ghost-btn"
+                  href={`${companyPathPrefix}ai-engineer-resume`}
+                >
+                  <FilePdf size={14} weight="bold" />
+                  A4 Resume
+                </a>
+                <a
+                  className="ghost-btn"
                   href="https://github.com/UICHANLEE"
                   rel="noreferrer"
                   target="_blank"
@@ -1038,6 +1047,14 @@ function PortfolioApp() {
 }
 
 export function App() {
+  const normalizedPath = window.location.pathname.replace(/\/+$/, "");
+  if (
+    normalizedPath === "/ai-engineer-resume" ||
+    normalizedPath === "/resume/ai-engineer-resume"
+  ) {
+    return <AiEngineerResume />;
+  }
+
   const profile = getCompanyProfile(window.location.pathname);
   return profile ? <CompanyResume profile={profile} /> : <PortfolioApp />;
 }
