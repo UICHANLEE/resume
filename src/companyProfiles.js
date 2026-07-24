@@ -690,6 +690,337 @@ export const companyProfiles = [
     skills: ["Python", "SQLD", "FastAPI", "데이터 품질", "UIPA·ISO 29110", "AI 위험관리"],
     applicationNote: "전산직 6급 AI 활용 분야를 기준으로 작성했습니다. 실제 지원서에는 학교명·성별·연령·출신지 등 블라인드 항목을 제거하고, 경력·자격증은 증빙 가능한 내용만 기재해야 합니다.",
   },
+  {
+    slug: "vuno",
+    aliases: ["뷰노"],
+    company: "뷰노",
+    role: "AI Research Engineer · PXI",
+    employment: "정규직 · 공고상 산업체 경력 3년 이상",
+    deadline: "상시채용 · 2026.07.24 확인",
+    checkedAt: "2026.07.24",
+    sourceUrl: "https://www.wanted.co.kr/wd/364373",
+    sourceLabel: "원티드 공고",
+    headline: "노이즈가 큰 전문 영상의 이상 영역을 제품 성능으로 바꾸는 Vision AI 엔지니어",
+    positioning:
+      "IRIS C-scan 결함 검출에서 label noise와 판정 기준 불일치를 데이터 운영 문제로 정의하고, 50,000건 이상의 라벨 품질 개선부터 YOLO 모델 학습·후처리·자동평가·신뢰성 근거까지 연결했습니다. 의료영상 경력은 없지만 공고가 강조하는 label noise, rater inconsistency, 재현성, 제품화 문제와 가장 가까운 산업 영상 경험을 전면에 배치했습니다.",
+    jobSummary:
+      "PXI팀의 흉부 X-ray 제품에서 데이터 부족, label noise, 판독자 간 불일치, domain shift를 연구 문제로 정의하고 분류·세그멘테이션 모델의 성능과 추론 안정성을 개선하는 역할입니다. PyTorch, W&B, DICOM, ONNX/OpenVINO, Docker를 사용하며 RA/QA·임상의료진과 협업합니다.",
+    keywords: ["Medical Imaging", "Segmentation", "Label Noise", "PyTorch", "Reproducibility", "Product AI"],
+    fitPoints: [
+      { value: "98%", label: "결함 탐지", detail: "노이즈가 큰 산업 영상의 결함 검출 정확도" },
+      { value: "50K+", label: "영상 라벨", detail: "라벨링·검수·재라벨링을 운영한 YOLO 데이터" },
+      { value: "-15%", label: "라벨 오류", detail: "판정 기준 통일과 품질 루프로 줄인 오류율" },
+    ],
+    requirements: [
+      { requirement: "의료영상 연구 문제 정의", evidence: "산업용 초음파 영상에서 신호 품질, label noise, 판정자별 기준 차이, 현장별 분포 차이를 분리해 모델·데이터 개선 과제로 정의", signal: "전이 가능" },
+      { requirement: "분류·세그멘테이션 모델 개발", evidence: "PyTorch·YOLOv8-seg 기반 IP·IC·EP·EC 결함 탐지와 낮은 신뢰도 후보 후처리, 자동평가 파이프라인 구축", signal: "핵심 강점" },
+      { requirement: "재현 가능한 학습·평가", evidence: "고정된 라벨 기준, 데이터셋 버전, 모델별 평가 지표와 처리시간 비교, facility 단위 hold-out 검증 경험", signal: "직접 경험" },
+      { requirement: "DICOM·임상·논문 연구", evidence: "MRI·CT 프로젝트 경험은 있으나 DICOM 운영, 임상 연구 설계, 의료 논문 게재 및 석사 학위는 없음", signal: "보완 필요" },
+    ],
+    stories: [
+      {
+        title: "판정자마다 다른 결함 기준을 학습 가능한 데이터 규칙으로 전환",
+        problem: "IRIS C-scan에서 같은 신호도 작업자에 따라 IP·IC·EP·EC 결함 판정이 달랐고, 저신뢰도 후보가 섞이면서 미검출과 오탐의 원인이 모델인지 라벨인지 구분하기 어려웠습니다.",
+        action: "결함 유형별 시각 기준과 경계 조건을 학습 단위로 다시 정의했습니다. CVAT·ROBOFLOW 기반 라벨링-검수-재라벨링 루프를 만들고, 낮은 신뢰도 후보는 별도 검토 대상으로 분리해 모델 오류와 데이터 오류를 독립적으로 확인했습니다.",
+        result: "50,000건 이상의 YOLO 데이터셋에서 라벨 오류를 약 15% 줄였고, IRIS-Auto 결함 탐지 정확도 98% 달성에 기여했습니다.",
+        tags: ["YOLOv8-seg", "Label Noise", "Human-in-the-loop"],
+      },
+      {
+        title: "평균 정확도 밖의 실패 조건을 제품 검증 근거로 구조화",
+        problem: "산업 영상 모델은 평균 정확도가 높아도 미세 결함 미검출, 장비·현장별 신호 변화, 설명 부족이 실제 판정 시스템의 위험으로 남았습니다.",
+        action: "결함 유형별 오탐·미탐과 운영 환경 영향을 나누고, ISO/IEC 23894 관점에서 원인·영향·통제·모니터링 항목을 위험관리대장에 연결했습니다. 자동평가 결과와 시스템 설명서가 같은 근거를 가리키도록 정리했습니다.",
+        result: "2025년 8월 TTA 신뢰성 중간심사를 통과했고, 모델 metric과 실제 운영 위험을 함께 설명하는 제품 수준의 검증 체계를 만들었습니다.",
+        tags: ["TTA", "AI Reliability", "RA/QA Transfer"],
+      },
+      {
+        title: "느린 자동평가 병목을 측정하고 대안을 검증",
+        problem: "영상 후보를 평가하는 SVR 단계가 약 35초 걸려 반복 실험과 현장 QA의 피드백 주기가 길어졌습니다.",
+        action: "정확도와 latency를 분리 측정하고 데이터 캐싱, 파라미터 조정, 대체 모델을 같은 평가셋에서 비교했습니다. 속도 개선이 미검출 증가로 이어지지 않는지 함께 확인했습니다.",
+        result: "기준 처리시간을 35초에서 22초로 줄였고 대체 모델에서 6초까지 단축 가능성을 확인해 제품 추론 병목의 개선 방향을 제시했습니다.",
+        tags: ["Inference", "Auto Evaluation", "Performance"],
+      },
+    ],
+    coverLetters: [
+      {
+        title: "지원동기와 직무 적합성",
+        body: "제가 가장 깊게 다룬 문제는 노이즈가 많고 정상과 이상의 경계가 불명확한 전문 영상을 실제 판정 시스템에 적용하는 일이었습니다. IRIS 초음파 영상에서 작업자별 결함 기준과 낮은 신뢰도 후보가 뒤섞여 있을 때, 모델 구조부터 바꾸지 않고 판정 기준과 라벨 품질을 먼저 재설계했습니다. 그 결과 50,000건 이상의 데이터에서 라벨 오류를 약 15% 줄이고 결함 탐지 정확도 98% 달성에 기여했습니다. 뷰노 PXI팀이 해결하는 label noise, rater inconsistency, domain shift는 영상 도메인은 다르지만 문제의 구조가 가깝습니다. 산업 영상에서 쌓은 데이터 중심 문제 해결과 제품 검증 경험을 흉부 X-ray 모델의 측정 가능한 성능 개선으로 전환하고 싶습니다.",
+      },
+      {
+        title: "문제를 정의하고 제품 성과로 연결한 경험",
+        body: "IRIS-Auto 초기에는 오탐과 미탐이 발생해도 원인이 라벨, 모델, 후처리, 현장 신호 중 어디에 있는지 구분하기 어려웠습니다. 저는 오류 사례를 결함 유형과 신뢰도 구간으로 나누고, 라벨링-검수-재라벨링 기준을 하나의 운영 규칙으로 통일했습니다. 저신뢰도 후보는 별도 검토 흐름으로 분리했으며 모델별 정확도와 처리시간을 같은 평가셋에서 비교했습니다. 그 결과 라벨 오류율을 약 15% 낮추고 98% 탐지 정확도 달성에 기여했으며, 자동평가 처리시간도 35초에서 22초로 줄였습니다. 연구 결과가 실제 제품 성능과 운영 효율로 이어져야 한다는 원칙을 이 경험으로 배웠습니다.",
+      },
+      {
+        title: "의료영상 경험의 간극과 학습 계획",
+        body: "DICOM, 임상 연구 설계, 판독자 일치도 분석은 입사 전 반드시 보완해야 할 영역입니다. 이를 숨기기보다 첫 단계에서 DICOM 메타데이터와 CXR 전처리, sensitivity·specificity·AUROC와 임상 사용 시나리오별 평가 기준을 학습하겠습니다. 이후 공개 CXR 데이터로 환자 단위 분할, label noise 분석, segmentation 재현 실험을 수행해 산업 영상의 데이터 QA 경험을 의료영상 규칙에 맞게 검증하겠습니다. TTA·ISO 29110 대응에서 익힌 추적성과 위험관리 관점도 RA/QA·임상의료진의 요구를 모델 개발 과정에 반영하는 기반으로 활용하겠습니다.",
+      },
+    ],
+    skills: ["PyTorch", "YOLOv8-seg", "OpenCV", "Data QA", "Docker", "AI Reliability"],
+    applicationNote: "현재 확인한 공고는 석사+산업체 1년 또는 산업체 3년 이상을 요구합니다. 학사 및 약 10개월의 직접 ML 경력만으로는 정량 자격이 부족할 수 있으므로 지원 전 채용담당자에게 프로젝트·제품화 경력 인정 범위를 확인해야 합니다.",
+  },
+  {
+    slug: "hecto",
+    aliases: ["헥토"],
+    company: "헥토",
+    role: "Vision AI Engineer",
+    employment: "신입 이상",
+    deadline: "2026.03.29 마감 표시 · 2026.07.24 확인",
+    checkedAt: "2026.07.24",
+    sourceUrl: "https://www.wanted.co.kr/wd/343827",
+    sourceLabel: "원티드 공고",
+    headline: "데이터 구축부터 실시간 추론까지 병목을 수치로 개선하는 Vision AI 엔지니어",
+    positioning:
+      "Detection·Segmentation 모델을 학습하는 데 그치지 않고 데이터 수집·전처리·라벨 QA·후처리·자동평가·추론시간 개선까지 전체 파이프라인을 다룬 경험을 헥토의 Vision AI 직무 언어로 정리했습니다.",
+    jobSummary:
+      "최신 논문 기반 Vision 모델 개발과 성능 개선, 데이터 수집·학습·추론 파이프라인 설계, 실시간 추론을 고려한 아키텍처 튜닝, 정형·비정형 데이터 전처리 알고리즘 개발을 수행하는 신입 이상 포지션입니다.",
+    keywords: ["Computer Vision", "Detection", "Segmentation", "Real-time Inference", "PyTorch", "Docker"],
+    fitPoints: [
+      { value: "98%", label: "Vision 성능", detail: "IRIS-Auto 산업 결함 탐지 정확도" },
+      { value: "50K+", label: "학습 데이터", detail: "직접 구축·검수한 YOLO 라벨 데이터" },
+      { value: "35→22s", label: "추론 개선", detail: "자동평가 파이프라인 처리시간 단축" },
+    ],
+    requirements: [
+      { requirement: "Detection·Segmentation 이해", evidence: "YOLOv8-seg 기반 산업 결함 탐지, 객체별 라벨 기준 설계, 낮은 신뢰도 후보 후처리", signal: "핵심 강점" },
+      { requirement: "데이터-학습-추론 파이프라인", evidence: "50,000건 이상 라벨 구축부터 학습, 자동평가, FastAPI 전달까지 end-to-end 수행", signal: "직접 경험" },
+      { requirement: "가설·실험·검증 문제 해결", evidence: "라벨 오류, 모델 성능, 후처리, 처리시간을 분리해 원인을 측정하고 대체 모델까지 비교", signal: "핵심 강점" },
+      { requirement: "실시간 최적화·제품 도메인", evidence: "처리시간 개선과 Docker 경험은 있으나 ONNX·TensorRT 기반 실시간 GPU 최적화 실무는 추가 보완 필요", signal: "보완 필요" },
+    ],
+    stories: [
+      {
+        title: "라벨 기준의 흔들림을 데이터 품질 파이프라인으로 해결",
+        problem: "산업 초음파 영상의 결함 경계가 모호하고 작업자별 기준이 달라, 모델이 일관된 특징을 학습하지 못하고 오류 분석도 반복됐습니다.",
+        action: "IP·IC·EP·EC 결함 정의와 예외 사례를 가이드로 만들고 CVAT·ROBOFLOW에서 라벨링, 2차 검수, 재라벨링이 같은 기준을 사용하도록 루프를 운영했습니다.",
+        result: "50,000건 이상의 데이터에서 라벨 오류를 약 15% 줄이고 YOLOv8-seg 결함 탐지 정확도 98% 달성에 기여했습니다.",
+        tags: ["Detection", "Segmentation", "Data QA"],
+      },
+      {
+        title: "추론 병목을 단계별 지표로 분해해 처리시간 단축",
+        problem: "자동평가 파이프라인에서 SVR 후처리가 약 35초를 차지해 모델 개선 결과를 반복 검증하는 속도가 느렸습니다.",
+        action: "데이터 로딩, 모델 추론, 후처리 시간을 분리 측정하고 캐싱·파라미터·대체 모델을 동일 조건에서 비교했습니다.",
+        result: "기준 처리시간을 22초로 줄였고 대체 모델에서 6초 수준의 가능성을 확인해 실시간 적용을 위한 우선 병목을 특정했습니다.",
+        tags: ["Profiling", "Inference", "Optimization"],
+      },
+      {
+        title: "AutoEncoder를 이용해 정답이 부족한 이상 탐지 가능성 검증",
+        problem: "모든 이상 패턴을 객체 라벨로 정의하기 어려워 알려지지 않은 결함과 정상 변동을 탐지하는 보조 방법이 필요했습니다.",
+        action: "정상 데이터의 표현을 학습하는 AutoEncoder 기반 anomaly score를 구성하고 YOLO 검출 결과와 함께 비교해 저신뢰도 후보를 선별했습니다.",
+        result: "지도학습 모델이 놓칠 수 있는 후보를 별도 검토 흐름으로 보내는 이상 탐지 보조 전략을 검증하고 후처리 설계의 근거를 확보했습니다.",
+        tags: ["AutoEncoder", "Anomaly Detection", "Post-processing"],
+      },
+    ],
+    coverLetters: [
+      {
+        title: "지원동기와 핵심 역량",
+        body: "헥토의 Vision AI Engineer는 모델 하나를 학습하는 역할이 아니라 데이터 수집부터 추론 최적화까지 전체 흐름을 책임지는 직무라는 점에서 제 경험과 맞닿아 있습니다. 저는 IRIS 초음파 영상의 결함 기준을 재정의하고 50,000건 이상의 YOLO 데이터를 구축했으며, YOLOv8-seg 학습·후처리·자동평가를 연결해 98% 탐지 정확도 달성에 기여했습니다. 또한 처리시간 병목을 측정해 35초를 22초로 줄였습니다. 데이터 품질과 모델 성능, 운영 속도를 분리해 측정하고 다시 하나의 제품 흐름으로 연결하는 엔지니어로 헥토의 다양한 비즈니스에 적용 가능한 Vision 파이프라인을 만들겠습니다.",
+      },
+      {
+        title: "가설과 실험으로 성능 문제를 해결한 경험",
+        body: "결함 탐지 오류가 반복됐을 때 모델 아키텍처 변경만 시도하면 원인을 놓칠 수 있다고 판단했습니다. 오류를 결함 유형, 라벨 품질, 신뢰도 구간, 처리 단계로 나누고 각 가설을 독립적으로 검증했습니다. 먼저 작업자별 기준을 통일해 라벨 오류를 약 15% 줄였고, 낮은 신뢰도 후보는 AutoEncoder와 후처리 단계에서 다시 확인했습니다. 자동평가 단계는 프로파일링해 35초에서 22초로 단축했습니다. 이 과정으로 정확도 98% 달성에 기여했으며, Vision 문제는 모델·데이터·시스템을 함께 봐야 해결된다는 실행 원칙을 확보했습니다.",
+      },
+    ],
+    skills: ["Python", "PyTorch", "YOLOv8-seg", "OpenCV", "Docker", "Vision Pipeline"],
+    applicationNote: "확인한 원티드 공고에는 2026.03.29 마감으로 표시되어 있습니다. 동일 직무 재오픈 여부를 확인한 뒤 지원하고, 포트폴리오 상단에는 Computer Vision · Industrial Anomaly Detection · PyTorch를 배치하는 편이 좋습니다.",
+  },
+  {
+    slug: "kristin-company",
+    aliases: ["크리스틴컴퍼니", "kristin"],
+    company: "크리스틴컴퍼니",
+    role: "AI Engineer · BizAX",
+    employment: "신입 이상 3년 이하",
+    deadline: "2026.02.03 마감 표시 · 2026.07.24 확인",
+    checkedAt: "2026.07.24",
+    sourceUrl: "https://jumpit.saramin.co.kr/position/52964038",
+    sourceLabel: "점핏 공고",
+    headline: "도메인 데이터를 정제하고 실험 근거를 제품 판단으로 연결하는 Applied AI 엔지니어",
+    positioning:
+      "신발 제조 데이터 기반 RAG·Agent PoC의 핵심인 데이터 정제, 재현 가능한 실험, API·스크립트 구현 역량에 맞춰 산업 데이터 QA, SOTA Hub, 크롤링 자동화, FastAPI 제품화 경험을 연결했습니다.",
+    jobSummary:
+      "슈캐치·신플 데이터를 수집·정제하고 LangChain 기반 RAG·Agent PoC, 프롬프트·파이프라인 실험, 배치 평가와 문서화를 수행해 신발 디자인·제조 기능의 제품 적용 여부를 판단하는 역할입니다.",
+    keywords: ["LLM", "RAG", "Agent PoC", "Data Curation", "Experiment Report", "Python"],
+    fitPoints: [
+      { value: "10K+", label: "논문 메타데이터", detail: "SOTA Hub 수집·정규화·검색 파이프라인" },
+      { value: "FastAPI", label: "PoC 제품화", detail: "모델 결과를 REST 서비스로 연결" },
+      { value: "50K+", label: "도메인 데이터", detail: "품질 기준을 설계한 산업 AI 데이터" },
+    ],
+    requirements: [
+      { requirement: "Python 데이터 처리·API", evidence: "산업 데이터 전처리, BeautifulSoup·Selenium 크롤링, FastAPI 모델 API와 배치 스크립트 구현", signal: "핵심 강점" },
+      { requirement: "재현 가능한 실험·문서화", evidence: "모델별 조건·성능·처리시간·실패 원인을 비교하고 TTA·ISO 산출물까지 추적 근거로 정리", signal: "직접 경험" },
+      { requirement: "HTML·PDF·이미지 데이터 정제", evidence: "논문 메타데이터 수집, 의료 논문 스크리닝, 이미지 라벨 QA와 다양한 포맷 정규화 경험", signal: "전이 가능" },
+      { requirement: "RAG·Vector DB·LangChain", evidence: "LLM 검사계획과 AI 제품 MVP 경험은 있으나 운영 수준 RAG, Vector DB, LangChain 실무는 부족", signal: "보완 필요" },
+    ],
+    stories: [
+      {
+        title: "흩어진 AI 논문 정보를 비교 가능한 SOTA 데이터로 전환",
+        problem: "AI 모델과 논문 정보가 여러 사이트와 서로 다른 포맷에 흩어져 있어 특정 태스크의 성능과 구현 근거를 빠르게 비교하기 어려웠습니다.",
+        action: "논문·모델 메타데이터를 수집하고 task, dataset, metric, code 링크를 공통 스키마로 정규화했습니다. 검색·필터링 가능한 웹 UI와 데이터 파이프라인을 연결했습니다.",
+        result: "10,000건 이상의 논문·모델 정보를 비교할 수 있는 SOTA Hub MVP를 구축해 비정형 연구 정보를 제품 탐색 데이터로 전환했습니다.",
+        tags: ["Crawling", "Metadata", "Search"],
+      },
+      {
+        title: "수명예측 실험을 재현 가능한 API 제품으로 전환",
+        problem: "FT-Transformer 성능이 좋아도 노트북 실험에 머물면 다른 개발자와 사용자가 같은 입력으로 결과를 검증하기 어려웠습니다.",
+        action: "입력 feature와 평가 방식을 LifeEvaluator로 모듈화하고 FastAPI lifespan 엔드포인트, 시각화, LLM 검사계획 로직을 연결했습니다. 시설 단위 분할과 지표를 고정했습니다.",
+        result: "R2 0.966, RMSE 2.57 모델을 재현 가능한 REST API 흐름으로 확장하고 제품 적용 판단에 필요한 성능 근거를 남겼습니다.",
+        tags: ["FastAPI", "Experiment", "Productization"],
+      },
+      {
+        title: "도메인 판단 기준을 데이터 품질 규칙으로 구조화",
+        problem: "산업 영상 결함 기준이 사람마다 달라 모델 실험 결과가 라벨 변화에 따라 흔들리고 실패 원인을 설명하기 어려웠습니다.",
+        action: "결함 taxonomy와 예외 기준을 정리하고 라벨링·검수·재라벨링을 같은 규칙과 버전으로 운영했습니다.",
+        result: "50,000건 이상 데이터에서 라벨 오류를 약 15% 줄이고 탐지 정확도 98% 달성에 기여해 도메인 지식을 모델 품질로 연결했습니다.",
+        tags: ["Domain Data", "Quality Check", "Documentation"],
+      },
+    ],
+    coverLetters: [
+      {
+        title: "지원동기와 직무 적합성",
+        body: "크리스틴컴퍼니가 찾는 AI Engineer는 LLM 기술을 조합하는 사람보다 신발 도메인 데이터를 정리하고 실험 결과를 제품 판단 근거로 바꾸는 사람에 가깝다고 생각합니다. 저는 산업 영상 데이터 50,000건 이상의 판정 기준을 구조화해 라벨 오류를 약 15% 줄였고, 10,000건 이상의 논문·모델 메타데이터를 수집·정규화한 SOTA Hub를 만들었습니다. 또한 FT-Transformer 실험을 FastAPI 서비스로 연결했습니다. 신발 디자인과 제조 데이터의 포맷·품질·관계를 먼저 이해하고, 작은 RAG·Agent PoC를 재현 가능한 평가와 함께 제시해 슈캐치와 신플에 실제로 적용할 기능을 빠르게 판별하겠습니다.",
+      },
+      {
+        title: "실험을 제품 판단 근거로 만든 경험",
+        body: "수명예측 프로젝트 초기에는 높은 점수보다 데이터 중복과 분할 방식이 결과를 과대평가할 위험이 더 큰 문제였습니다. 저는 facility와 파일명 기준 매핑을 만들고 공통 facility 103개를 선별해 시설 단위 hold-out을 고정했습니다. 이후 feature와 모델을 단계적으로 비교해 R2를 0.847에서 0.966까지 높였고 RMSE 2.57을 달성했습니다. 실험 조건, 결과, 한계, 다음 액션을 남긴 뒤 FastAPI로 전달 구조를 만들었습니다. BizAX에서도 프롬프트나 체인을 빠르게 바꾸는 데 그치지 않고 어떤 데이터와 조건에서 기능화할 가치가 있는지 설명하겠습니다.",
+      },
+      {
+        title: "RAG·Agent 역량 보완 계획",
+        body: "운영 수준의 LangChain·Vector DB 경험은 현재 가장 분명한 간극입니다. 입사 지원과 동시에 신발 제조 문서·이미지 메타데이터를 가정한 소형 RAG PoC를 만들고, chunking·retrieval·reranking 조건별 precision과 답변 근거성을 비교하겠습니다. SOTA Hub의 메타데이터 정규화와 FastAPI 경험을 활용해 수집-정제-색인-평가-API 흐름을 구현하고, 성공 사례뿐 아니라 실패 질의와 한계를 문서화해 면접에서 실제 코드와 평가 결과로 보완하겠습니다.",
+      },
+    ],
+    skills: ["Python", "FastAPI", "Data Curation", "Crawling", "Docker", "Experiment Design"],
+    applicationNote: "확인한 점핏 공고는 2026.02.03 마감 상태입니다. 동일 포지션 재오픈 여부를 먼저 확인하고, 제출 시에는 RAG 경험을 과장하지 말고 SOTA Hub·LLM 검사계획·신규 PoC의 코드와 평가표로 보완해야 합니다.",
+  },
+  {
+    slug: "dalpha",
+    aliases: ["달파"],
+    company: "달파",
+    role: "AI Chapter · AI Engineer",
+    employment: "인턴 6개월 또는 정규직",
+    deadline: "상시채용 · 2026.07.24 확인",
+    checkedAt: "2026.07.24",
+    sourceUrl: "https://dalpha-recruiting.career.greetinghr.com/ko/o/212856",
+    sourceLabel: "달파 채용 원문",
+    headline: "모호한 고객 문제를 측정 가능한 AI 서비스로 끝까지 완성하는 엔지니어",
+    positioning:
+      "달파가 이력서에서 요구하는 0→1 구축과 1→100 고도화를 각각 FastAPI·Cashlog MVP와 IRIS-Auto 품질 개선으로 증명합니다. 모델 정확도뿐 아니라 응답 속도, 운영 안정성, 고객 요구와 품질 문서까지 연결한 경험을 강조했습니다.",
+    jobSummary:
+      "기업의 문제와 데이터를 분석해 맞춤형 AI 솔루션을 설계하고 모델 개발·테스트·배포·모니터링·지속 개선까지 수행합니다. Python·PyTorch·Docker·AWS·PostgreSQL·Vector DB·k8s를 사용하며 AI Agent·LLM 제품 경험을 우대합니다.",
+    keywords: ["0→1 AI", "1→100 Optimization", "B2B AI", "AI Agent", "Deployment", "Monitoring"],
+    fitPoints: [
+      { value: "0→1", label: "AI 제품", detail: "모델 API와 사용자 MVP를 직접 구현" },
+      { value: "98%", label: "1→100 개선", detail: "데이터 품질부터 운영한 Vision 시스템" },
+      { value: "35→22s", label: "운영 지표", detail: "처리 병목 측정과 성능 개선" },
+    ],
+    requirements: [
+      { requirement: "고객 문제 분석·맞춤형 AI", evidence: "현장 결함 기준과 수명평가 요구를 데이터·모델·API 명세로 바꾸고 고객사별 평가 방식 3종을 구조화", signal: "핵심 강점" },
+      { requirement: "개발-테스트-배포 전 과정", evidence: "PyTorch 모델 학습, 자동평가, FastAPI, Docker, 웹 UI를 연결한 산업 AI 제품화 경험", signal: "직접 경험" },
+      { requirement: "운영 모니터링·지속 개선", evidence: "정확도, 라벨 오류, 처리시간, 환경 위험을 지표화하고 TTA 신뢰성 근거와 재발 방지 문서로 관리", signal: "핵심 강점" },
+      { requirement: "AI Agent·AWS·k8s", evidence: "LLM 검사계획과 자동화 MVP는 있으나 RAG·Agent 운영, AWS·k8s 실서비스 경험은 부족", signal: "보완 필요" },
+    ],
+    stories: [
+      {
+        title: "모호한 현장 판정을 98% 정확도의 AI 시스템으로 고도화",
+        problem: "결함 기준이 작업자마다 다르고 라벨 오류가 누적돼 모델의 오탐·미탐 원인과 개선 우선순위를 합의하기 어려웠습니다.",
+        action: "현장 용어를 IP·IC·EP·EC 학습 단위로 재정의하고 라벨링-검수-재라벨링 규칙을 만들었습니다. 모델 오류와 데이터 오류를 분리해 자동평가 결과로 반복 확인했습니다.",
+        result: "50,000건 이상의 데이터에서 라벨 오류를 약 15% 줄이고 결함 탐지 정확도 98% 달성에 기여했습니다.",
+        tags: ["1→100", "Customer Problem", "PyTorch"],
+      },
+      {
+        title: "노트북 모델을 수명평가 API와 검사계획으로 제품화",
+        problem: "수명예측 모델과 고객사별 평가 공식이 분리돼 사용자가 결과를 반복 조회하고 다음 검사 시점을 결정하기 어려웠습니다.",
+        action: "SK·GS·DEEPAI 방식 3종을 LifeEvaluator로 모듈화하고 FT-Transformer, FastAPI, 시각화, LLM 검사계획을 하나의 호출 흐름으로 연결했습니다.",
+        result: "R2 0.966 모델을 REST API 제품 흐름으로 전환하고 예측 결과가 다음 업무 액션으로 이어지는 0→1 구조를 만들었습니다.",
+        tags: ["0→1", "FastAPI", "LLM Workflow"],
+      },
+      {
+        title: "사용자 입력 한 장으로 지출 기록을 만드는 Cashlog MVP",
+        problem: "영수증과 결제 화면을 보고 지출 항목을 수동 입력하는 과정은 반복적이고 모바일에서 이탈이 잦았습니다.",
+        action: "이미지 입력에서 금액·상호·카테고리를 추출하고 사용자가 최소한의 수정만 하도록 React 기반 화면과 API 저장 흐름을 설계했습니다.",
+        result: "AI 추출 결과를 사용자의 실제 기록 행동으로 연결하는 작동 가능한 MVP를 구현해 모델 기능과 제품 경험을 함께 검증했습니다.",
+        tags: ["Cashlog", "Applied AI", "Product MVP"],
+      },
+    ],
+    coverLetters: [
+      {
+        title: "지원동기와 달파에서의 기여",
+        body: "저는 AI 프로젝트에서 가장 어려운 일은 모델 선택이 아니라 모호한 현장 문제를 측정 가능한 기준으로 바꾸고 실제 사용 흐름까지 완성하는 것이라고 배웠습니다. IRIS 프로젝트에서는 작업자마다 다른 결함 기준을 데이터 규칙으로 정리해 라벨 오류를 약 15% 줄이고 탐지 정확도 98% 달성에 기여했습니다. 수명예측에서는 고객사별 방식 3종과 FT-Transformer를 FastAPI·LLM 검사계획으로 연결했습니다. 달파에서도 고객의 도메인 언어를 데이터와 지표로 구체화하고, 작은 실험을 빠르게 배포한 뒤 정확도·응답속도·사용 결과를 바탕으로 0→1과 1→100을 모두 책임지겠습니다.",
+      },
+      {
+        title: "근본 원인을 정의해 성능과 운영을 함께 개선한 경험",
+        body: "IRIS-Auto의 오탐과 미탐을 줄이는 과정에서 처음부터 새 모델을 도입하지 않았습니다. 오류를 라벨 기준, 신뢰도 구간, 모델, 후처리, 처리시간으로 나눠 각각 측정했습니다. 결함 taxonomy와 검수 규칙을 통일해 50,000건 이상의 데이터에서 라벨 오류를 약 15% 줄였고, 자동평가 병목은 프로파일링을 통해 35초에서 22초로 단축했습니다. 결과적으로 98% 탐지 정확도에 기여하면서 반복 QA 속도도 높였습니다. 달파의 고객 프로젝트에서도 표면 증상보다 재발을 만드는 구조를 먼저 찾고 성능과 운영 지표를 함께 개선하겠습니다.",
+      },
+      {
+        title: "Agent 실무 간극을 메우는 방법",
+        body: "RAG·Function Calling·Multi-Agent를 운영한 경험은 아직 부족합니다. 다만 LLM 검사계획, 크롤링 자동화, FastAPI, PostgreSQL 기반 제품을 구현하며 도구 호출과 데이터 흐름을 서비스로 연결해 왔습니다. 입사 전에는 기존 프로젝트 문서와 수명평가 API를 도구로 사용하는 Agent PoC를 구축하고, task 성공률·근거 정확도·latency·실패 복구를 평가하겠습니다. 새로운 기술 이름을 나열하기보다 고객 업무에서 어떤 단계가 줄었는지와 어떤 실패가 남는지를 지표로 설명하겠습니다.",
+      },
+    ],
+    skills: ["Python", "PyTorch", "FastAPI", "Docker", "PostgreSQL", "Applied AI"],
+    applicationNote: "현재 공식 공고는 인턴과 정규직을 동시에 모집하며 업무 차이는 없다고 명시합니다. 직접 정규직으로 지원하되, RAG·Agent와 AWS·k8s 간극은 작동하는 PoC와 평가 지표로 보완하는 전략이 적절합니다.",
+  },
+  {
+    slug: "deepauto",
+    aliases: ["딥오토", "deep-auto"],
+    company: "딥오토",
+    role: "AI Engineer Intern · Data Intelligence Track",
+    employment: "인턴 · 신입",
+    deadline: "채용 공고 게시 중 · 2026.07.24 확인",
+    checkedAt: "2026.07.24",
+    sourceUrl: "https://demoday.co.kr/recruits/3458",
+    sourceLabel: "데모데이 공고",
+    headline: "복잡한 산업 영상과 문서를 학습 가능한 데이터로 바꾸는 Data Intelligence 엔지니어",
+    positioning:
+      "4개 트랙 중 YOLO·OCR·OpenCV를 직접 요구하는 Data Intelligence 트랙을 목표로 설정했습니다. 산업 영상 결함 탐지, 도메인 라벨 설계, 후처리, PDF·메타데이터 정제 경험을 설계 도면·기술 문서 문제로 연결했습니다.",
+    jobSummary:
+      "CAD·PDF·이미지 등 산업 비정형 데이터를 이해하는 Agentic AI를 개발하는 인턴입니다. Data Intelligence 트랙은 OCR과 Object Detection 학습·추론 파이프라인을 구축하고 결과를 데이터 레이크하우스에 연동합니다.",
+    keywords: ["Object Detection", "OCR", "Industrial Data", "YOLO", "OpenCV", "VLM"],
+    fitPoints: [
+      { value: "98%", label: "Object Detection", detail: "산업 영상 결함 탐지 정확도" },
+      { value: "50K+", label: "Dataset", detail: "YOLO 포맷 구축·검수·버전 운영" },
+      { value: "10K+", label: "Document Data", detail: "논문·모델 메타데이터 정규화" },
+    ],
+    requirements: [
+      { requirement: "YOLO Object Detection", evidence: "YOLOv8-seg 기반 산업 결함 탐지, 50,000건 이상 데이터 구축, 저신뢰도 후보 후처리", signal: "핵심 강점" },
+      { requirement: "도메인 영상 전처리", evidence: "노이즈가 큰 초음파 C-scan의 결함 기준 설계, 크기 정규화, 검수와 AutoEncoder 이상 탐지 경험", signal: "직접 경험" },
+      { requirement: "비정형 문서 구조화", evidence: "논문·모델 메타데이터 10,000건 이상 수집·정규화와 PDF 기반 의료 논문 스크리닝 경험", signal: "전이 가능" },
+      { requirement: "OCR·CAD·레이크하우스", evidence: "OCR 모델 fine-tuning, DXF/CAD 파싱, Spark·Databricks 기반 데이터 레이크하우스 경험은 없음", signal: "보완 필요" },
+    ],
+    stories: [
+      {
+        title: "산업 영상의 모호한 결함을 YOLO 학습 데이터로 구조화",
+        problem: "초음파 C-scan의 결함 경계가 불명확하고 현장별 노이즈가 달라 일반적인 객체 라벨 규칙을 그대로 적용하기 어려웠습니다.",
+        action: "IP·IC·EP·EC 결함을 신호 위치와 형태 기준으로 재정의하고 CVAT·ROBOFLOW 라벨링, 검수, 재라벨링 루프를 운영했습니다. 640x640 YOLO 데이터로 정규화했습니다.",
+        result: "50,000건 이상의 산업 영상 데이터셋을 구축하고 라벨 오류를 약 15% 줄여 탐지 정확도 98% 달성에 기여했습니다.",
+        tags: ["YOLO", "Industrial Image", "Dataset"],
+      },
+      {
+        title: "지도학습과 이상 탐지를 결합해 미정의 후보를 선별",
+        problem: "라벨로 정의된 결함만 탐지하면 새로운 형태나 경계 사례를 놓칠 수 있고, 낮은 신뢰도 후보를 모두 사람이 확인하기에는 비용이 컸습니다.",
+        action: "YOLO 결과의 신뢰도 구간을 나누고 정상 패턴을 학습한 AutoEncoder anomaly score와 후처리 규칙을 결합해 우선 검토 후보를 선별했습니다.",
+        result: "미정의 이상 후보를 별도 검토할 수 있는 하이브리드 흐름을 검증해 객체 탐지 모델의 한계를 보완하는 설계 근거를 만들었습니다.",
+        tags: ["AutoEncoder", "Hybrid Logic", "Bbox"],
+      },
+      {
+        title: "비정형 연구 정보를 검색 가능한 스키마로 변환",
+        problem: "논문과 구현체 정보가 HTML·PDF·저장소에 흩어져 모델 비교와 후속 실험에 반복적인 수작업이 필요했습니다.",
+        action: "수집기를 만들고 task, dataset, metric, model, code 링크를 공통 스키마로 정규화해 검색·필터 UI와 연결했습니다.",
+        result: "10,000건 이상의 논문·모델 메타데이터를 다루는 SOTA Hub MVP를 구축해 비정형 문서를 구조화 데이터로 전환했습니다.",
+        tags: ["PDF/HTML", "Metadata", "Pipeline"],
+      },
+    ],
+    coverLetters: [
+      {
+        title: "지원동기와 희망 트랙",
+        body: "딥오토의 네 트랙 중 Data Intelligence 모델 설계·구현 트랙에 지원하고자 합니다. 저는 산업용 초음파 영상에서 결함 경계를 정의하고 50,000건 이상의 YOLO 데이터를 구축해 YOLOv8-seg 탐지 정확도 98% 달성에 기여했습니다. 단순 모델 학습뿐 아니라 라벨 기준, 저신뢰도 후처리, AutoEncoder 이상 탐지, 자동평가까지 연결했습니다. 설계 도면과 기술 문서는 형태가 다르지만 노이즈가 많고 도메인 규칙을 데이터 구조로 옮겨야 한다는 점이 가깝습니다. IRIS에서 축적한 데이터 중심 Vision 경험을 OCR·도면 객체 탐지 파이프라인으로 확장하겠습니다.",
+      },
+      {
+        title: "모호한 요구를 기술 기준으로 바꾼 경험",
+        body: "현장에서는 결함 이름은 공유했지만 경계와 예외 기준이 사람마다 달라 모델이 무엇을 학습해야 하는지 명확하지 않았습니다. 저는 작업자의 판단을 IP·IC·EP·EC 유형과 시각 조건으로 분해하고, 라벨링-검수-재라벨링이 같은 가이드를 사용하도록 운영했습니다. 모델 오류와 데이터 오류를 분리해 확인하고 낮은 신뢰도 후보는 AutoEncoder와 후처리로 다시 선별했습니다. 그 결과 라벨 오류를 약 15% 줄이고 탐지 정확도 98% 달성에 기여했습니다. 딥오토에서도 도면의 객체 관계와 고객 요구를 먼저 명시적 데이터 규칙으로 바꾸겠습니다.",
+      },
+      {
+        title: "인턴 지원 판단과 성장 목표",
+        body: "산업 AI 실무 경험이 있어도 OCR·CAD·VLM·데이터 레이크하우스는 새롭게 배워야 할 영역입니다. 인턴 기간에는 첫째 PaddleOCR과 YOLO를 이용한 도면 텍스트·객체 baseline을 구축하고, 둘째 회전·스캔 왜곡·중첩 객체별 오류를 평가하며, 셋째 결과 스키마를 Agent와 데이터 저장 계층이 재사용할 수 있게 설계하겠습니다. 인턴 직급 자체보다 정규직 전환 기준과 실제 제품 기여 범위를 확인하고, 짧은 기간에도 재현 가능한 데이터·모델 파이프라인을 남기는 것을 목표로 하겠습니다.",
+      },
+    ],
+    skills: ["Python", "PyTorch", "YOLOv8-seg", "OpenCV", "Data Pipeline", "FastAPI"],
+    applicationNote: "Data Intelligence 트랙을 1지망으로 작성했습니다. 현재 경력 수준 대비 인턴 직급이 낮을 수 있으므로 지원 전에 정규직 전환 기준·평가 시점·트랙별 채용 인원을 확인하고, 전환 조건이 명확할 때 우선 지원하는 편이 좋습니다.",
+  },
 ];
 
 export function getCompanyProfile(pathname) {
