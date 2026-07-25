@@ -1021,6 +1021,345 @@ export const companyProfiles = [
     skills: ["Python", "PyTorch", "YOLOv8-seg", "OpenCV", "Data Pipeline", "FastAPI"],
     applicationNote: "Data Intelligence 트랙을 1지망으로 작성했습니다. 현재 경력 수준 대비 인턴 직급이 낮을 수 있으므로 지원 전에 정규직 전환 기준·평가 시점·트랙별 채용 인원을 확인하고, 전환 조건이 명확할 때 우선 지원하는 편이 좋습니다.",
   },
+  {
+    slug: "prevenotics",
+    aliases: ["prevenotics-medical-ai", "프리베노틱스"],
+    company: "Prevenotics",
+    role: "Medical AI Engineer",
+    employment: "정규직 · 신입 표기",
+    deadline: "2026.07.24경 게시 · 마감 정보 미제공",
+    checkedAt: "2026.07.26",
+    sourceUrl: "https://www.prevenotics.com/",
+    sourceLabel: "회사 홈페이지 · 공고 링크 미제공",
+    headline: "노이즈가 큰 전문 영상을 검증 가능한 의료 AI 제품으로 연결하는 엔지니어",
+    positioning:
+      "IRIS 초음파 검사 영상에서 결함 기준을 정의하고 50,000건 이상의 학습 데이터를 구축해 탐지 정확도 98% 달성에 기여했습니다. Recall 중심 오류 분석, FastAPI 제품화, TTA 신뢰성 대응 경험을 임상 데이터 검증과 의료 AI 운영 문제로 연결했습니다.",
+    jobSummary:
+      "전달받은 2026년 7월 25일 스캔 기준으로 암 조기진단을 위한 의료영상·임상 데이터 모델 개발, 실제 임상 데이터 검증, 프로덕션 시스템 통합과 배포·모니터링을 담당하는 포지션입니다.",
+    keywords: ["Medical Imaging", "Clinical Validation", "PyTorch", "Recall", "FastAPI", "Monitoring"],
+    fitPoints: [
+      { value: "98%", label: "전문 영상 탐지", detail: "초음파 C-scan 결함 탐지 정확도 달성 기여" },
+      { value: "50K+", label: "학습 데이터", detail: "도메인 라벨 정의·검수·재라벨링 운영" },
+      { value: "15%↓", label: "라벨 오류", detail: "가이드와 품질 루프로 데이터 오류 감소" },
+    ],
+    requirements: [
+      { requirement: "의료영상 AI 모델 개발", evidence: "YOLOv8-seg 산업 영상 탐지와 Stanford MRNet MRI·ResNet-18 분류 프로젝트로 전문 영상 전처리·모델링 경험 보유", signal: "전이 가능" },
+      { requirement: "실제 임상 데이터 검증", evidence: "시설·고객별 분포 차이를 고려한 facility hold-out, MissCall·OverCall 검증셋, 오류 유형별 재검증 경험", signal: "핵심 강점" },
+      { requirement: "프로덕션 통합·배포·모니터링", evidence: "FastAPI REST API, Docker 배포, 처리시간·데이터 오류·환경 위험 지표 관리와 TTA 신뢰성 대응", signal: "직접 경험" },
+      { requirement: "DICOM·EHR·의료기기 규제", evidence: "pydicom·SimpleITK 탐색 경험은 있으나 DICOM 운영, EHR/NLP, 임상 연구와 IEC 62304·ISO 13485 실무는 없음", signal: "보완 필요" },
+    ],
+    stories: [
+      {
+        title: "모호한 초음파 결함을 재현 가능한 학습 기준으로 전환",
+        problem: "IRIS C-scan은 현장별 노이즈가 다르고 IP·IC·EP·EC의 경계가 작업자마다 달라, 미탐 원인이 모델인지 라벨인지 분리하기 어려웠습니다.",
+        action: "결함을 신호 위치와 형태 기준으로 다시 정의하고 CVAT·ROBOFLOW에서 라벨링-검수-재라벨링이 같은 가이드를 사용하도록 운영했습니다. 640x640 YOLO 포맷으로 50,000건 이상의 데이터를 구축했습니다.",
+        result: "라벨 오류율을 약 15% 낮추고 YOLOv8-seg 기반 결함 탐지 정확도 98% 달성에 기여했습니다. 전문 영상의 도메인 판단을 학습 가능한 규칙으로 바꾼 경험을 확보했습니다.",
+        tags: ["YOLOv8-seg", "Clinical-like Data QA", "Recall"],
+      },
+      {
+        title: "미탐과 오탐을 별도 검증셋으로 분리해 원인을 좁히다",
+        problem: "주변 결측이 없는 감육·관통홀은 놓치고 신호 왜곡과 Gain 변화는 결함으로 오인해, 전체 정확도만으로는 환자 안전과 유사한 미탐 위험을 설명할 수 없었습니다.",
+        action: "MissCall 100건과 OverCall 100건 검증셋을 별도로 만들고 None·0값, ID>OD 논리 오류, 이상치 3σ, Gain KDE 재검증, 연속 결측과 BFS 로직을 단계별로 점검했습니다.",
+        result: "팀 개선 결과 오탐을 약 30% 줄이고 처리속도를 3배 개선했습니다. 오류 유형을 분리해 Recall과 운영 비용을 함께 관리하는 평가 방식을 만들었습니다.",
+        tags: ["MissCall", "OverCall", "Error Analysis"],
+      },
+      {
+        title: "실험 모델을 API와 신뢰성 근거가 있는 제품 흐름으로 확장",
+        problem: "좋은 예측 점수가 있어도 입력 검증, 결과 조회, 다음 검사 행동과 위험관리 근거가 분리돼 있으면 현장에서 반복 사용할 수 없었습니다.",
+        action: "LifeEvaluator로 평가 방식 3종을 모듈화하고 FastAPI 업로드·평가·결과·파일·LLM 엔드포인트를 설계했습니다. 모델 오류와 환경 영향을 ISO/IEC 23894 위험관리 문서에 연결했습니다.",
+        result: "R2 0.966 수명예측을 REST API와 검사계획 기능으로 제품화하고 2025년 8월 TTA 신뢰성 중간심사를 통과했습니다.",
+        tags: ["FastAPI", "Docker", "AI Reliability"],
+      },
+    ],
+    coverLetters: [
+      {
+        title: "지원동기와 의료 AI로의 전환",
+        body: "암 조기진단 모델의 가치는 높은 평균 정확도보다 놓치면 안 되는 이상을 안정적으로 발견하고, 의료진이 실제 진료 흐름에서 같은 결과를 재현할 수 있게 만드는 데 있다고 생각합니다. 저는 초음파 IRIS C-scan에서 모호한 결함 경계를 데이터 기준으로 정의하고 50,000건 이상의 학습 데이터를 구축해 탐지 정확도 98% 달성에 기여했습니다. 미탐과 오탐을 별도 검증셋으로 관리하고 모델을 FastAPI 서비스와 신뢰성 문서까지 연결한 경험도 있습니다. Prevenotics에서는 산업 검사 영상에서 익힌 데이터 중심 접근을 위장관 의료영상과 임상 검증 기준에 맞게 전환해, 모델 성능이 실제 조기진단 가치로 이어지도록 기여하겠습니다.",
+      },
+      {
+        title: "Recall 중심으로 오류를 해결한 경험",
+        body: "IRIS 자동평가에서 주변 결측이 없는 감육과 관통홀을 놓치는 문제가 반복됐습니다. 저는 전체 정확도를 다시 계산하는 대신 MissCall 100건과 OverCall 100건을 분리하고, 입력 결측·논리 오류·Gain 왜곡·후처리 단계를 차례로 점검했습니다. Gain 분포는 KDE 기반으로 재검증하고 연속 결측과 BFS 로직을 보완했습니다. 팀 개선 결과 오탐을 약 30% 줄이고 처리속도를 3배 높였습니다. 의료 AI에서도 환자 단위 분할과 병변·기관·장비별 오류표를 먼저 만들고 sensitivity와 false positive burden을 함께 추적해, 임상적으로 위험한 실패부터 줄이겠습니다.",
+      },
+      {
+        title: "의료 도메인 격차를 보완하는 계획",
+        body: "DICOM 운영, EHR·의료 NLP, 임상시험 설계와 의료기기 규제 실무는 아직 부족합니다. 이를 산업 영상 경험으로 대체했다고 주장하지 않겠습니다. 지원 전 공개 위장관 내시경 데이터로 환자 단위 분할, frame·lesion 단위 sensitivity, 기관·장비별 domain shift를 재현하고 DICOM 메타데이터와 비식별화 흐름을 학습하겠습니다. 입사 후에는 의료진의 판독 기준과 RA·QA 요구를 데이터 가이드, 실험 로그, 모델 카드와 위험관리 항목으로 연결해 임상 검증 과정 자체를 재현 가능한 개발 자산으로 만들겠습니다.",
+      },
+    ],
+    skills: ["Python", "PyTorch", "YOLOv8-seg", "OpenCV", "FastAPI", "Docker"],
+    applicationNote: "채용공고 원문 URL이 전달되지 않아 회사 홈페이지와 2026.07.25 스캔 내용을 기준으로 작성했습니다. 제출 전 고용형태·마감일·세부 자격을 원문에서 확인하고 DICOM·임상 검증·의료기기 규제 경험을 과장 없이 표시해야 합니다.",
+  },
+  {
+    slug: "hyundai-autoever-ai-researcher",
+    aliases: ["hyundai-autoever-researcher", "현대오토에버-ai-researcher"],
+    company: "현대오토에버",
+    role: "AI Engineer · AI Researcher",
+    employment: "정규직 · 경력 5년 이상",
+    deadline: "상시채용 · 채용 시 마감",
+    checkedAt: "2026.07.26",
+    sourceUrl: "https://career.hyundai-autoever.com/ko/o/210274",
+    sourceLabel: "현대오토에버 공식 공고",
+    headline: "산업 영상과 설비 데이터를 검증 가능한 AI 서비스로 연결하는 연구개발 엔지니어",
+    positioning:
+      "YOLOv8-seg 기반 Vision AI와 FT-Transformer 기반 설비 수명예측을 모두 수행했습니다. 데이터 분할·오류 분석·실험 설계에서 시작해 API 적용과 신뢰성 검증까지 이어간 경험을 AI Researcher 직무에 맞춰 구성했습니다.",
+    jobSummary:
+      "Vision·NLP·Multimodal 딥러닝과 생성형 AI R&D, 신기술 평가, 응용 모델·분석 도구·AI 시스템 설계 및 실제 서비스 적용을 수행하는 인공지능기술실 포지션입니다.",
+    keywords: ["Vision", "Transformer", "Multimodal", "Experiment Design", "AI R&D", "Deployment"],
+    fitPoints: [
+      { value: "2 Domains", label: "모델 연구", detail: "Vision 결함 탐지와 tabular 수명예측" },
+      { value: "0.847→0.966", label: "실험 개선", detail: "분할·feature·학습 조건을 단계적으로 검증" },
+      { value: "2.2TB", label: "산업 데이터", detail: "설비·운영환경 변수를 포함한 데이터 분석" },
+    ],
+    requirements: [
+      { requirement: "딥러닝·생성형 AI 이론과 구현", evidence: "PyTorch 기반 YOLOv8-seg·FT-Transformer, Qwen2.5-VL·PEFT/Accelerate, OpenAI·Ollama 응용 경험", signal: "직접 경험" },
+      { requirement: "영상-센서 융합 모델", evidence: "영상 결함 탐지와 설비·운영환경 tabular 예측을 각각 수행했으나 하나의 멀티모달 fusion 모델로 통합한 경험은 없음", signal: "보완 필요" },
+      { requirement: "실험 설계·신기술 평가", evidence: "facility hold-out, 57개 feature, 오류 유형별 검증셋, baseline·대체 모델·처리시간 비교 실험", signal: "핵심 강점" },
+      { requirement: "AI 시스템 설계·서비스 적용", evidence: "FastAPI 수명평가 API, LLM 검사계획, 자동평가·시각화와 TTA 신뢰성 대응까지 제품화", signal: "직접 경험" },
+      { requirement: "경력 5년 이상", evidence: "AI 기업 실무는 2025.03~12로 공식 최소 경력에 미달하며 논문·챌린지 실적도 제한적", signal: "자격 위험" },
+    ],
+    stories: [
+      {
+        title: "전문 영상의 데이터 정의부터 Vision 모델 성능까지 연결",
+        problem: "초음파 C-scan은 노이즈와 결함 경계의 모호성 때문에 같은 결함도 작업자별 라벨이 달랐고 모델 오류의 원인을 설명하기 어려웠습니다.",
+        action: "IP·IC·EP·EC 유형을 신호 형태와 위치로 재정의하고 50,000건 이상의 라벨링·검수 루프를 운영했습니다. MissCall·OverCall 검증셋으로 모델과 후처리 오류를 분리했습니다.",
+        result: "라벨 오류를 약 15% 줄이고 YOLOv8-seg 결함 탐지 정확도 98% 달성에 기여해 데이터 정의가 모델 성능으로 이어지는 실험 체계를 만들었습니다.",
+        tags: ["Vision", "YOLOv8-seg", "Error Analysis"],
+      },
+      {
+        title: "음수 R2의 원인을 모델이 아닌 평가 구조에서 찾다",
+        problem: "초기 수명예측은 facility별 분포 차이와 중복 데이터로 R2가 음수까지 흔들려 새로운 모델을 적용해도 일반화 성능을 믿기 어려웠습니다.",
+        action: "facility와 파일명 기준으로 중복 347건을 추적하고 공통 facility 103개를 선별했습니다. facility hold-out을 고정한 뒤 57개 feature, 샘플링과 FT-Transformer 하이퍼파라미터를 순차 검증했습니다.",
+        result: "33,300개 샘플·37개 facility 조건에서 R2를 0.847에서 0.966으로 높이고 RMSE 2.57, MAE 1.99를 달성했습니다.",
+        tags: ["FT-Transformer", "Hold-out", "Ablation"],
+      },
+      {
+        title: "연구 결과를 실제 판단 시스템으로 전환",
+        problem: "모델 결과가 노트북에 머물면 현장 사용자가 같은 입력으로 재현하거나 다음 검사 시점을 결정할 수 없었습니다.",
+        action: "평가 방식 3종을 LifeEvaluator로 모듈화하고 FastAPI, 시각화 4종, OpenAI·Ollama 기반 검사계획을 연결했습니다. 위험과 실패 조건은 TTA 문서에 추적했습니다.",
+        result: "R2 0.966 모델을 DEEP-NDT 수명평가 서비스로 확장하고 저작권 등록과 TTA 신뢰성 중간심사 통과까지 이어갔습니다.",
+        tags: ["Applied R&D", "FastAPI", "Reliability"],
+      },
+    ],
+    coverLetters: [
+      {
+        title: "지원동기와 연구개발 방향",
+        body: "저는 AI 연구의 완성도를 논문 속 최고 점수보다 데이터가 달라졌을 때도 재현되고 실제 서비스의 판단을 개선하는가로 평가합니다. 산업용 초음파 영상에서는 50,000건 이상의 데이터 기준을 정리해 탐지 정확도 98% 달성에 기여했고, 설비 수명예측에서는 facility 단위 검증으로 FT-Transformer R2 0.966을 만들었습니다. 이후 모델을 FastAPI와 검사계획 기능으로 연결했습니다. 현대오토에버 인공지능기술실에서도 Vision·센서·언어 문제를 공통 데이터 계약과 평가 체계로 구조화하고, 신기술을 작은 재현 실험에서 시작해 그룹 서비스에 적용 가능한 모델로 발전시키겠습니다.",
+      },
+      {
+        title: "실패한 모델을 회복시킨 실험 설계",
+        body: "수명예측 초기 R2가 음수로 떨어졌을 때 더 큰 모델부터 적용하지 않았습니다. 동일 facility와 파일이 학습·검증에 섞이는지 확인해 중복 347건을 추적하고 공통 facility 103개를 선별했습니다. 이후 facility hold-out을 고정하고 feature 정의, 샘플링, 하이퍼파라미터를 한 번에 하나씩 바꿔 실험했습니다. 그 결과 R2를 0.847에서 0.966으로 개선했습니다. 이 경험을 바탕으로 멀티모달 연구에서도 modality별 baseline, 결측·동기화 오류, fusion 방식과 실제 사용 지표를 분리해 어떤 변화가 성능을 만들었는지 설명하겠습니다.",
+      },
+      {
+        title: "공고 자격과 기술 격차에 대한 판단",
+        body: "현재 공식 공고의 경력 5년 이상 조건에는 미달하며 멀티모달 fusion, 강화학습, 주요 학회 논문 경험도 부족합니다. 이 사실을 프로젝트 수로 포장하지 않겠습니다. 다만 Vision과 설비 데이터를 각각 제품화하며 데이터 누수, domain shift, 평가 재현성, API 적용을 직접 다룬 경험은 분명합니다. 지원 가능 여부를 먼저 채용 담당자에게 확인하고, 지원한다면 공개 영상-센서 데이터로 unimodal baseline과 late fusion을 비교한 재현 코드, 오류 분석표, 배포 데모를 제출해 전환 가능성을 증명하겠습니다.",
+      },
+    ],
+    skills: ["Python", "PyTorch", "YOLOv8-seg", "FT-Transformer", "FastAPI", "Experiment Design"],
+    applicationNote: "전달받은 스캔에는 신입으로 적혀 있었지만 2026.07.26 공식 공고는 경력 5년 이상입니다. 직접 지원 전 자격 인정 여부를 확인해야 하며, 확인되지 않으면 현대오토에버 신입 AI Engineer 공채를 우선하는 편이 안전합니다.",
+  },
+  {
+    slug: "hyundai-autoever-llm",
+    aliases: ["hyundai-autoever-llm-engineer", "현대오토에버-llm"],
+    company: "현대오토에버",
+    role: "AI Engineer · LLM 엔지니어",
+    employment: "정규직 · 경력 5년 이상",
+    deadline: "상시채용 · 채용 시 마감",
+    checkedAt: "2026.07.26",
+    sourceUrl: "https://career.hyundai-autoever.com/ko/o/195429",
+    sourceLabel: "현대오토에버 공식 공고",
+    headline: "도메인 데이터를 학습·평가·서빙 흐름으로 구조화하는 LLM 엔지니어",
+    positioning:
+      "50,000건 이상의 도메인 데이터 운영, Qwen2.5-VL·PEFT/Accelerate 파이프라인, OpenAI·Ollama 기반 검사계획과 FastAPI 제품화 경험을 강조했습니다. Alignment와 대규모 LLM 서빙 경험은 명확한 격차로 분리했습니다.",
+    jobSummary:
+      "LLM·Multi-modal LLM 학습, 도메인 지식 반영, 데이터셋·증강·자동평가, 도메인 특화 Agent를 개발합니다. fine-tuning 설계와 ML 파이프라인 운영을 요구하며 vLLM·sglang·TRT-LLM·Triton과 KV cache 최적화를 우대합니다.",
+    keywords: ["LLM Fine-tuning", "Dataset", "Automatic Evaluation", "Model Serving", "GPU", "Domain Agent"],
+    fitPoints: [
+      { value: "50K+", label: "도메인 데이터", detail: "기준 정의부터 검수·버전 운영까지 수행" },
+      { value: "Qwen2.5-VL", label: "멀티모달 실험", detail: "PEFT·Accelerate와 OCR 파이프라인 구성" },
+      { value: "5 APIs", label: "서비스 연결", detail: "모델 입력·결과·파일·LLM 엔드포인트" },
+    ],
+    requirements: [
+      { requirement: "데이터셋 구축·모델 학습·평가", evidence: "50,000건 이상 YOLO 데이터와 33,300개 tabular 샘플을 구축하고 hold-out·오류 유형별 지표로 검증", signal: "핵심 강점" },
+      { requirement: "task별 fine-tuning 설계", evidence: "Qwen2.5-VL·Transformers·PEFT·Accelerate 기반 온디바이스 지출 분류·OCR 파이프라인 실험", signal: "프로젝트 경험" },
+      { requirement: "도메인 LLM·Agent 응용", evidence: "OpenAI·Ollama가 수명평가 결과를 받아 다음 검사 대상 30개 튜브를 제안하는 LLM 검사계획 API 구현", signal: "전이 가능" },
+      { requirement: "vLLM·TRT-LLM·KV cache·대규모 트래픽", evidence: "CUDA·ONNX·CoreML·TFLite와 성능 프로파일링 경험은 있으나 LLM 전용 서빙 엔진과 대규모 트래픽 운영은 없음", signal: "보완 필요" },
+      { requirement: "경력 5년 이상", evidence: "AI 기업 실무기간이 공식 최소 경력에 미달하고 Alignment Tuning 실무도 없음", signal: "자격 위험" },
+    ],
+    stories: [
+      {
+        title: "도메인 판단을 데이터셋 운영 규칙으로 변환",
+        problem: "결함 이름은 같아도 작업자마다 경계와 예외 판단이 달라 학습 데이터가 누적될수록 label noise도 함께 커졌습니다.",
+        action: "결함 taxonomy, 라벨 가이드, 검수·재라벨링 조건을 정의하고 CVAT·ROBOFLOW에서 50,000건 이상의 데이터를 버전별로 운영했습니다.",
+        result: "라벨 오류를 약 15% 줄이고 탐지 정확도 98% 달성에 기여했습니다. LLM 데이터 구축에서도 필요한 입력 기준·예외·검수 루프를 설계한 경험입니다.",
+        tags: ["Dataset Curation", "Data QA", "Versioning"],
+      },
+      {
+        title: "예측 결과를 도메인 행동으로 바꾸는 LLM 검사계획 구축",
+        problem: "수명예측 값만 제공해서는 사용자가 어떤 튜브를 언제 다시 검사해야 하는지 결정하기 어려웠고, 고객사별 평가 공식도 서로 달랐습니다.",
+        action: "SK·GS·DEEPAI 평가 방식을 공통 스키마로 만들고 전차수 30%와 현차수 70% 정보를 조합해 OpenAI·Ollama가 검사 대상 30개 튜브를 제안하도록 FastAPI 엔드포인트를 구현했습니다.",
+        result: "정형 예측 모델과 LLM을 연결해 숫자 출력이 다음 검사 행동으로 이어지는 도메인 응용 흐름을 만들었습니다.",
+        tags: ["OpenAI", "Ollama", "Domain Workflow"],
+      },
+      {
+        title: "멀티모달 모델을 모바일 배포 후보까지 연결",
+        problem: "영수증·결제 화면 기반 지출 기록은 이미지 이해, OCR, 분류와 개인정보를 고려한 온디바이스 실행이 함께 필요했습니다.",
+        action: "Qwen2.5-VL, Transformers, PEFT·Accelerate, EasyOCR를 조합한 cashlog-auto 파이프라인을 구성하고 CoreML·TFLite·ONNX 변환 경로를 검토했습니다.",
+        result: "이미지 입력에서 지출 정보 추출·분류·모델 변환까지 이어지는 실험 기반을 구축해 학습 모델을 제품 제약과 함께 평가했습니다.",
+        tags: ["Qwen2.5-VL", "PEFT", "ONNX"],
+      },
+    ],
+    coverLetters: [
+      {
+        title: "지원동기와 LLM 엔지니어로의 확장",
+        body: "도메인 특화 LLM의 성능은 모델 크기보다 어떤 데이터를 어떤 기준으로 만들고, 실패를 어떻게 평가하며, 결과를 업무 흐름에 연결하는지에 달려 있다고 생각합니다. 저는 산업 영상 50,000건 이상의 기준과 검수 루프를 운영했고, FT-Transformer를 facility hold-out으로 검증해 R2 0.966을 달성했습니다. 이후 OpenAI·Ollama가 수명평가 결과를 바탕으로 검사 대상 30개 튜브를 제안하는 FastAPI 기능을 구현했습니다. 현대오토에버에서는 이 경험을 도메인 데이터셋·자동평가·fine-tuning·서빙 지표로 확장해, 그룹의 실제 업무에서 반복 사용되는 LLM을 만들겠습니다.",
+      },
+      {
+        title: "데이터와 평가를 먼저 고정한 경험",
+        body: "수명예측 모델의 초기 R2가 음수로 흔들렸을 때 모델 크기를 키우지 않고 데이터 중복과 분할부터 확인했습니다. facility와 파일명 기준으로 중복을 추적하고 공통 facility 103개를 선별한 뒤 hold-out을 고정했습니다. feature, sampling, hyperparameter를 단계적으로 바꾼 결과 R2를 0.847에서 0.966으로 높였습니다. LLM 프로젝트에서도 학습 전에 task schema와 train·validation 분리, baseline, automatic evaluation, 사람이 확인해야 할 실패 유형을 먼저 고정하고 변경 효과를 재현 가능한 로그로 남기겠습니다.",
+      },
+      {
+        title: "LLM 서빙과 경력 격차 보완 계획",
+        body: "Alignment Tuning, vLLM·sglang·TRT-LLM, prefix-aware routing, KV cache와 대규모 트래픽 운영은 아직 실무 경험이 없습니다. 또한 공식 경력 5년 조건에 미달합니다. 지원 가능 여부를 확인한 뒤, 가능하다면 Qwen 계열 소형 모델에 도메인 SFT를 적용하고 vLLM 기반 serving benchmark를 만들어 throughput, TTFT, token latency, GPU memory, cache hit rate를 비교하겠습니다. 기존 CUDA·ONNX·성능 프로파일링 경험을 LLM 서빙 지표로 확장해 말이 아닌 재현 코드로 격차를 보완하겠습니다.",
+      },
+    ],
+    skills: ["Python", "PyTorch", "Transformers", "PEFT/Accelerate", "FastAPI", "CUDA/ONNX"],
+    applicationNote: "2026.07.26 공식 공고는 경력 5년 이상입니다. 신입 포지션으로 간주하면 안 되며 Alignment·LLM 전용 serving stack 경험도 부족합니다. 채용 담당자에게 자격을 먼저 확인하고 불가하면 신입 AI Engineer 공채를 우선해야 합니다.",
+  },
+  {
+    slug: "hyundai-autoever-ai-agent",
+    aliases: ["hyundai-autoever-agent", "현대오토에버-ai-agent"],
+    company: "현대오토에버",
+    role: "AI Engineer · AI Agent 엔지니어",
+    employment: "정규직 · 경력 5년 이상",
+    deadline: "상시채용 · 채용 시 마감",
+    checkedAt: "2026.07.26",
+    sourceUrl: "https://career.hyundai-autoever.com/ko/o/210269",
+    sourceLabel: "현대오토에버 공식 공고",
+    headline: "모델·도구·사용자 행동을 API 계약으로 연결하는 Applied AI 엔지니어",
+    positioning:
+      "FastAPI 기반 모델 서비스, OpenAI·Ollama 검사계획, Airflow·크롤링 자동화와 처리시간 최적화 경험을 AI Agent 시스템의 기반 역량으로 연결했습니다. LangGraph·MCP·A2A 운영 경험은 직접 경험으로 포장하지 않았습니다.",
+    jobSummary:
+      "AI Agent 아키텍처와 orchestration, MCP 기반 채널 연동, AI API·마이크로서비스와 성능 튜닝, 업무 자동화 솔루션을 개발합니다. MLOps 연계가 필수이며 A2A·MCP, 지식그래프, 클라우드 배포를 우대합니다.",
+    keywords: ["AI Agent", "Orchestration", "MCP", "Microservice", "Automation", "MLOps"],
+    fitPoints: [
+      { value: "5 APIs", label: "도구 인터페이스", detail: "업로드·평가·결과·파일·LLM 호출 계약" },
+      { value: "35→22s", label: "성능 튜닝", detail: "자동평가 병목 프로파일링과 최적화" },
+      { value: "Airflow", label: "업무 자동화", detail: "수집·검색·저장 파이프라인 DAG 구성" },
+    ],
+    requirements: [
+      { requirement: "Agent architecture·orchestration", evidence: "모델 결과→LLM 검사계획→사용자 행동 흐름과 다중 수집 자동화는 구현했으나 LangGraph 기반 장기 실행 Agent 운영은 없음", signal: "전이 가능" },
+      { requirement: "AI API·마이크로서비스", evidence: "Pydantic 계약을 사용한 FastAPI 모델 API, OpenAI·Ollama 연동, Node.js·Vercel serverless 서비스 구현", signal: "핵심 강점" },
+      { requirement: "성능 튜닝·MLOps 연계", evidence: "SVR 처리시간 35초→22초, 대체 모델 6초 비교와 모델 버전 26회 관리, Docker·Airflow 경험", signal: "직접 경험" },
+      { requirement: "MCP·A2A·지식그래프·온톨로지", evidence: "MCP 도구 사용 경험은 있으나 프로토콜 서버 설계, A2A 상호운용과 knowledge graph 개발 실무는 없음", signal: "보완 필요" },
+      { requirement: "경력 5년 이상", evidence: "AI 기업 실무기간이 공식 최소 경력에 미달하고 상용 Agent 운영 이력도 없음", signal: "자격 위험" },
+    ],
+    stories: [
+      {
+        title: "분리된 모델과 공식을 호출 가능한 도구 계약으로 통합",
+        problem: "기존 수명평가 공식, 고객사 방식과 AI 모델이 서로 다른 입력·출력을 사용해 사용자가 결과를 비교하거나 다음 행동으로 연결하기 어려웠습니다.",
+        action: "평가 방식 3종을 LifeEvaluator로 모듈화하고 Pydantic 스키마와 FastAPI 업로드·평가·결과·파일·LLM 엔드포인트를 설계했습니다.",
+        result: "모델과 계산 도구를 공통 API로 호출하고 LLM이 검사 대상 30개 튜브를 제안하는 재사용 가능한 업무 흐름을 만들었습니다.",
+        tags: ["Tool Contract", "FastAPI", "LLM Workflow"],
+      },
+      {
+        title: "반복 이커머스 업무를 상태가 남는 자동화 파이프라인으로 전환",
+        problem: "트렌딩 상품 탐색, 검색, 후보 저장을 사람이 반복하면서 처리 순서와 실패 지점을 추적하기 어려웠습니다.",
+        action: "Selenium·BeautifulSoup 수집, pandas 정제, SQLite 저장을 단계별 작업으로 나누고 Apache Airflow DAG와 Streamlit 상태 화면으로 구성했습니다.",
+        result: "웹 탐색부터 데이터 저장까지 반복 실행 가능한 domeme 자동화 기반을 만들어 수동 업무를 도구 단위로 분해했습니다.",
+        tags: ["Airflow", "Automation", "Tool Use"],
+      },
+      {
+        title: "서비스 병목을 정확도와 응답시간으로 분리해 개선",
+        problem: "자동평가 파이프라인의 SVR 처리시간이 길어 Agent나 API가 호출해도 사용자 대기시간과 반복 QA 비용이 커질 수 있었습니다.",
+        action: "단계별 시간을 측정하고 n_jobs·epsilon·C를 조정한 뒤 KernelRidge·FastPoly 대체 모델의 정확도와 latency를 비교했습니다.",
+        result: "기준 처리시간을 35초에서 22초로 줄였고 정확도 3%p 이내 손실 조건에서 6초까지 단축 가능한 대안을 확인했습니다.",
+        tags: ["Latency", "Profiling", "Fallback"],
+      },
+    ],
+    coverLetters: [
+      {
+        title: "지원동기와 Agent 시스템 관점",
+        body: "AI Agent의 가치는 대화가 자연스러운가보다 필요한 도구를 정확히 선택하고, 실패 시 원인을 남기며, 실제 업무 단계를 줄이는가로 판단해야 한다고 생각합니다. 저는 수명평가 공식과 모델을 FastAPI 도구로 분리하고 OpenAI·Ollama가 결과를 받아 다음 검사 대상 30개 튜브를 제안하는 흐름을 만들었습니다. 또한 Airflow 기반 수집 자동화와 API 병목 최적화를 수행했습니다. 현대오토에버에서는 업무를 작은 도구 계약으로 분해하고 권한·상태·재시도·평가 지표를 명확히 설계해 실제 그룹 서비스에서 신뢰할 수 있는 Agent를 만들겠습니다.",
+      },
+      {
+        title: "문제 해결과 성능 튜닝 경험",
+        body: "자동평가 파이프라인의 응답이 느렸을 때 단순히 서버 자원을 늘리지 않았습니다. 전처리, 회귀, 이상치 제거와 후처리 단계의 시간을 측정하고 SVR의 병렬도와 파라미터를 조정했습니다. 기준 처리시간을 35초에서 22초로 줄였고 KernelRidge·FastPoly 대체 모델은 정확도 손실과 함께 비교해 6초 가능성을 확인했습니다. Agent 서비스에서도 모델 호출, retrieval, tool execution, serialization을 분리해 latency budget을 정하고, timeout·fallback·재시도 정책을 품질 지표와 함께 관리하겠습니다.",
+      },
+      {
+        title: "Agent 프로토콜과 경력 격차 보완 계획",
+        body: "LangGraph 기반 orchestration, MCP 서버·A2A 상호운용, 지식그래프와 상용 Agent 운영 경험은 부족하고 공식 경력 5년 조건에도 미달합니다. 가능 여부를 먼저 확인하겠습니다. 지원이 가능하다면 수명평가 API를 MCP 도구로 노출하고 planner·executor·validator를 분리한 PoC를 구축하겠습니다. task success rate, tool selection accuracy, groundedness, latency, retry recovery를 자동평가하고 권한 범위와 감사 로그까지 포함해 기존 API 경험이 Agent 아키텍처로 확장되는 과정을 증명하겠습니다.",
+      },
+    ],
+    skills: ["Python", "FastAPI", "OpenAI/Ollama", "Docker", "Apache Airflow", "PostgreSQL"],
+    applicationNote: "공식 공고는 경력 5년 이상이며 MCP·A2A·Agent orchestration의 직접 실무 경험도 부족합니다. 우선순위를 A-가 아니라 조건부로 낮추고, 자격 확인과 MCP 기반 PoC가 준비된 경우에만 지원하는 편이 타당합니다.",
+  },
+  {
+    slug: "goward",
+    aliases: ["goward-ml", "고워드"],
+    company: "GOWARD",
+    role: "Machine Learning Engineer",
+    employment: "정규직 · 플랫폼 신입 표시 / 자격은 석사 또는 경력 3년 이상",
+    deadline: "2026.07.23경 게시 · 채용 시 마감 확인 필요",
+    checkedAt: "2026.07.26",
+    sourceUrl: "https://kr.linkedin.com/jobs/view/machine-learning-engineer-at-algolab-co-ltd-4436531304",
+    sourceLabel: "LinkedIn 공고",
+    headline: "복잡한 운영 데이터를 재현 가능한 ML 파이프라인과 서비스 성과로 바꾸는 엔지니어",
+    positioning:
+      "산업 데이터 전처리, 예측·클러스터링, 모델 버전 관리, 성능 최적화와 FastAPI·Docker 제품화 경험을 물류 ML 문제에 연결했습니다. 경로 최적화·NLP·AWS·Kubernetes와 최소 자격 미충족 가능성은 명확히 표시했습니다.",
+    jobSummary:
+      "End-to-End ML 파이프라인, 최신 기술의 상용 적용, 지리·운송 제약을 반영한 경로 최적화와 지역 클러스터링, NLP 챗봇, 모델 버전·모니터링·MLOps와 인프라 최적화를 담당합니다.",
+    keywords: ["End-to-End ML", "Optimization", "Clustering", "MLOps", "Logistics", "NLP"],
+    fitPoints: [
+      { value: "0.966", label: "예측 모델", detail: "facility hold-out 기반 수명예측 성능" },
+      { value: "35→22s", label: "파이프라인 최적화", detail: "정확도와 latency를 함께 비교" },
+      { value: "26 Releases", label: "모델 버전", detail: "산업 모델 버전별 변경·검증 관리" },
+    ],
+    requirements: [
+      { requirement: "End-to-End ML 파이프라인", evidence: "2.2TB 데이터 정제, feature·split, FT-Transformer 학습·평가, FastAPI·시각화·LLM 기능까지 연결", signal: "핵심 강점" },
+      { requirement: "경로 최적화·지역 클러스터링", evidence: "결함 영역 비지도 클러스터링과 예측 최적화 경험은 있으나 지도·운송 제약 기반 VRP 실무는 없음", signal: "보완 필요" },
+      { requirement: "NLP 챗봇·LLM", evidence: "OpenAI·Ollama 검사계획과 Qwen2.5-VL 실험은 있으나 고객용 물류 챗봇 운영 경험은 없음", signal: "전이 가능" },
+      { requirement: "MLOps·상용 인프라", evidence: "Docker·Airflow·Git 버전 관리와 API 배포 경험은 있으나 Kubernetes·AWS·분산학습 운영은 없음", signal: "보완 필요" },
+      { requirement: "석사 또는 관련 경력 3년 이상", evidence: "학사이며 관련 기업 실무는 1년 미만으로 공식 최소 자격을 충족한다고 보기 어려움", signal: "자격 위험" },
+    ],
+    stories: [
+      {
+        title: "흩어진 설비 데이터를 예측 서비스까지 연결",
+        problem: "수명 데이터는 시설·차수별 파일 구조와 feature 정의가 달랐고 중복 facility가 섞여 높은 점수도 실제 일반화 성능인지 판단하기 어려웠습니다.",
+        action: "facility·파일명 매핑으로 중복 347건을 추적하고 공통 facility 103개를 선별했습니다. 57개 feature와 hold-out을 고정해 FT-Transformer를 학습하고 평가 방식 3종을 API로 모듈화했습니다.",
+        result: "R2 0.966, RMSE 2.57을 달성하고 예측 결과를 FastAPI·시각화·검사계획으로 전달하는 End-to-End 파이프라인을 만들었습니다.",
+        tags: ["E2E ML", "FT-Transformer", "FastAPI"],
+      },
+      {
+        title: "노이즈가 큰 검사 데이터를 결함 클러스터로 구조화",
+        problem: "None·0값, ID>OD 논리 오류, Gain 왜곡과 이상치가 섞여 같은 결함이 여러 조각으로 분리되거나 정상 신호가 결함 군집에 포함됐습니다.",
+        action: "결측·논리 오류 전처리, SVR 회귀, 3σ 이상치 제거, Gain 재검증과 연속 결측·BFS 처리를 거쳐 결함 깊이·탐지·클러스터링 순서를 고정했습니다.",
+        result: "팀 개선 결과 오탐을 약 30% 줄이고 처리속도를 3배 높여 비정형 현장 신호를 운영 가능한 군집 결과로 변환했습니다.",
+        tags: ["Clustering", "Data Cleaning", "Operations"],
+      },
+      {
+        title: "정확도 손실과 처리시간을 함께 관리한 최적화",
+        problem: "SVR 병렬 회귀가 CPU를 과도하게 사용해 자동평가 반복 속도가 느렸고 단순 모델 교체는 예측 정확도를 훼손할 위험이 있었습니다.",
+        action: "n_jobs·epsilon·C를 조정하고 KernelRidge·FastPoly를 동일 데이터에서 비교해 latency와 정확도 차이를 함께 기록했습니다.",
+        result: "기준 처리시간을 35초에서 22초로 단축하고 정확도 3%p 이내 손실 조건에서 6초 대안을 확인해 운영 조건에 따른 선택지를 만들었습니다.",
+        tags: ["Optimization", "Latency", "Trade-off"],
+      },
+    ],
+    coverLetters: [
+      {
+        title: "지원동기와 물류 ML로의 전환",
+        body: "물류 AI는 좋은 예측 모델 하나보다 지리적 제약, 주문의 비정형성, 운영 비용과 응답시간을 하나의 파이프라인에서 관리하는 일이 중요하다고 생각합니다. 저는 산업 설비 데이터에서 결측·논리 오류·시설별 분포 차이를 정리하고 FT-Transformer R2 0.966을 달성한 뒤 FastAPI 서비스까지 연결했습니다. 결함 군집화와 처리시간 최적화도 수행했습니다. GOWARD에서는 주문·기사·시간·지역 데이터를 생성 규칙부터 이해하고 baseline과 운영 KPI를 함께 정의해, 모델 결과가 묶음배송률·배차시간·공차거리 개선으로 이어지는 End-to-End ML 시스템을 만들겠습니다.",
+      },
+      {
+        title: "성능 병목을 비즈니스 선택지로 바꾼 경험",
+        body: "자동평가 파이프라인의 SVR 처리시간이 35초까지 늘어나 반복 QA가 지연됐습니다. 저는 정확도와 latency를 분리해 측정하고 병렬도와 파라미터를 조정해 22초로 단축했습니다. 이어 KernelRidge와 FastPoly를 비교해 정확도 3%p 이내 손실 조건에서 6초 대안을 확인했습니다. 하나의 최고 모델을 고집하지 않고 운영 목적에 따라 정확도와 비용의 선택지를 제시한 경험입니다. 물류 경로·클러스터링에서도 거리뿐 아니라 SLA, 기사 수용도, 계산시간과 실패 복구를 함께 최적화하겠습니다.",
+      },
+      {
+        title: "자격요건과 도메인 격차에 대한 판단",
+        body: "LinkedIn은 신입으로 표시하지만 본문은 석사 이상 또는 관련 경력 3년 이상을 요구해 현재 이력만으로 최소 자격을 충족한다고 보기 어렵습니다. 경로 최적화, Kubernetes·AWS, 물류 NLP도 직접 경험이 없습니다. 지원 가능 여부를 먼저 확인하고, 허용된다면 공개 도로망과 주문 데이터를 이용한 VRP·지역 클러스터링 baseline, 제약 위반률·거리·계산시간 평가표, FastAPI 배포 데모를 제출하겠습니다. 자격을 우회해 표현하기보다 산업 ML 제품화 경험과 빠른 도메인 전환 능력을 코드로 증명하겠습니다.",
+      },
+    ],
+    skills: ["Python", "PyTorch", "scikit-learn", "FastAPI", "Docker", "Apache Airflow"],
+    applicationNote: "플랫폼의 신입 표기와 달리 본문 필수요건은 ML 관련 석사 이상 또는 관련 경력 3년 이상입니다. 현재 기준으로는 조건부 지원 대상이며, 채용 담당자가 동등 프로젝트 경력을 인정하는지 확인되지 않으면 지원 우선순위를 낮춰야 합니다.",
+  },
 ];
 
 export function getCompanyProfile(pathname) {
